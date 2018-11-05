@@ -27,7 +27,7 @@ $app = new Slim\App($configs);
 // buat route untuk url homepage
 $app->get('/', function($req, $res)
 {
-  echo "Welcome at Slim Framework";
+  echo "Hello Sang Pejuang !, Gan Batte !!!!";
 });
  
 // buat route untuk webhook
@@ -54,7 +54,37 @@ $app->post('https://adabot.herokuapp.com/index.php/webhook', function ($request,
     }
  
     // kode aplikasi nanti disini
+
+    $data = json_decode($body, true);
+if(is_array($data['events'])){
+    foreach ($data['events'] as $event)
+    {
+        if ($event['type'] == 'message')
+        {
+            if($event['message']['type'] == 'text')
+            {
+                // send same message as reply to user
+                $result = $bot->replyText($event['replyToken'], $event['message']['text']);
  
+                // or we can use replyMessage() instead to send reply message
+                // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
+                // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+ 
+                return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+            }
+        }
+    } 
+}
+ 
+});
+$app->get('/pushmessage', function($req, $res) use ($bot)
+{
+    // send push message to user
+    $userId = 'U0c39fbef2dfcab2b38de2e70586d805b';
+    $textMessageBuilder = new TextMessageBuilder('Halo, ini pesan push');
+    $result = $bot->pushMessage($userId, $textMessageBuilder);
+   
+    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
  
 $app->run();
