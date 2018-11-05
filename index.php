@@ -31,7 +31,7 @@ $app->get('/', function($req, $res)
 });
  
 // buat route untuk webhook
-$app->post('/https://adabot.herokuapp.com/index.php/linebot', function ($request, $response) use ($bot, $pass_signature)
+$app->post('https://adabot.herokuapp.com/index.php/webhook', function ($request, $response) use ($bot, $pass_signature)
 {
     // get request body and line signature header
     $body        = file_get_contents('php://input');
