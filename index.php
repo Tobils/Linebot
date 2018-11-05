@@ -30,9 +30,8 @@ $app->get('/', function($req, $res)
   echo "Welcome at Slim Framework";
 });
  
-// buat route untuk webhook // 
-$app->post('/webhook', function ($request, $response) use ($bot, $pass_signature)
-
+// buat route untuk webhook
+$app->post('/https://adabot.herokuapp.com/index.php/linebot', function ($request, $response) use ($bot, $pass_signature)
 {
     // get request body and line signature header
     $body        = file_get_contents('php://input');
@@ -41,7 +40,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
     // log body and signature
     file_put_contents('php://stderr', 'Body: '.$body);
  
-    if($pass_signature === true)
+    if($pass_signature === false)
     {
         // is LINE_SIGNATURE exists in request header?
         if(empty($signature)){
@@ -55,35 +54,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
     }
  
     // kode aplikasi nanti disini
-$data = json_decode($body, true);
-if(is_array($data['event'])){
-    foreach ($data['event'] as $event){
-        if ($evet['type'] == 'message'){
-            if ($event['message']['type'] == 'text'){
-                // send same message as reply to user
-                $result = $bot->replyText($event['replyToken'],$event['message']['text']);
-
-                // or we can use replyMessage() instead to send reply message
-                // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
-                // $result = $bot->withMESSAGE($event['replyToken'], $textMessageBuilder);
-
-                return $response->withJson($result->getJSONDecodedBody(),$result->getHTTPSatus());
-                
-            }
-        }
-    }
-}
- 
  
 });
-$app->get('/pushmessage', function($req, $res) use ($bot)
-{
-    // send push message to user
-    $userId = 'jalerse';
-    $textMessageBuilder = new TextMessageBuilder('Halo, ini pesan push');
-    $result = $bot->pushMessage($userId, $textMessageBuilder);
-   
-    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-});
-
+ 
 $app->run();
