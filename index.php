@@ -70,8 +70,14 @@ if(is_array($data['events'])){
                 // $result = $bot->replyMessage($replyToken, $textMessageBuilder);
 
                 // or we can use replyMessage() instead to send reply message
-                $textMessageBuilder = new TextMessageBuilder('ini adalah pesan balasan');
-                $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+                // $textMessageBuilder = new TextMessageBuilder('ini adalah pesan balasan');
+                // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+
+                // try to rplay using sticker
+                $packageid = 13;
+                $stickerid = 1;
+                $stickerMessageBuilder = new StickerMessageBuilder($packageid, $stickerid);
+                $result = $bot->replyMessage($event['replyToken'],$stickerMessageBuilder);
  
                 return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                 file_put_contents('php://stderr', $output);
