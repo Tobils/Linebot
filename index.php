@@ -136,9 +136,6 @@ $app->get('/', function($req, $res)
 // });
 
 $app->post('/webhook', function (Request $request, Response $response) use ($bot, $httpClient) {
- 
-    ...
- 
     $data = json_decode($body, true);
     if (is_array($data['events'])) {
         foreach ($data['events'] as $event) {
