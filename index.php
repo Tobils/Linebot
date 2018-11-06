@@ -20,7 +20,7 @@ $httpClient = new CurlHTTPClient($channel_access_token);
 $bot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
  
 $configs =  [
-    'settings' => ['displayErrorDetails' => false],
+    'settings' => ['displayErrorDetails' => true],
 ];
 $app = new Slim\App($configs);
  
@@ -55,71 +55,71 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
  
     // kode aplikasi nanti disini
 
-$data = json_decode($body, true);
-if(is_array($data['events'])){
-    foreach ($data['events'] as $event)
-    {
-        if ($event['type'] == 'message')
-        {
-            if($event['message']['type'] == 'text')
-            {
-                // untuk model Content API
-                if(
-                    $event['message']['type'] == 'image' or
-                    $event['message']['type'] == 'video' or
-                    $event['message']['type'] == 'audio' or
-                    $event['message']['type'] == 'file'
-                ){
-                    $basePath  = $request->getUri()->getBaseUrl();
-                    $contentURL  = $basePath."/content/".$event['message']['id'];
-                    $contentType = ucfirst($event['message']['type']);
-                    $result = $bot->replyText($event['replyToken'],
-                        $contentType. " yang Anda kirim bisa diakses dari link:\n " . $contentURL);
+// $data = json_decode($body, true);
+// if(is_array($data['events'])){
+//     foreach ($data['events'] as $event)
+//     {
+//         if ($event['type'] == 'message')
+//         {
+//             if($event['message']['type'] == 'text')
+//             {
+//                 // untuk model Content API
+//                 if(
+//                     $event['message']['type'] == 'image' or
+//                     $event['message']['type'] == 'video' or
+//                     $event['message']['type'] == 'audio' or
+//                     $event['message']['type'] == 'file'
+//                 ){
+//                     $basePath  = $request->getUri()->getBaseUrl();
+//                     $contentURL  = $basePath."/content/".$event['message']['id'];
+//                     $contentType = ucfirst($event['message']['type']);
+//                     $result = $bot->replyText($event['replyToken'],
+//                         $contentType. " yang Anda kirim bisa diakses dari link:\n " . $contentURL);
                  
-                    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                }
-                else {
-                    // send same message as reply to user
-                    // $result = $bot->replyText($event['replyToken'], $event['message']['text']);
-                    // $result = $bot->replyText($replyToken, 'ini pesan balasan');
-                    // $textMessageBuilder = new TextMessageBuilder('ini pesan balasan');
-                    // $result = $bot->replyMessage($replyToken, $textMessageBuilder);
+//                     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+//                 }
+//                 else {
+//                     // send same message as reply to user
+//                     // $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+//                     // $result = $bot->replyText($replyToken, 'ini pesan balasan');
+//                     // $textMessageBuilder = new TextMessageBuilder('ini pesan balasan');
+//                     // $result = $bot->replyMessage($replyToken, $textMessageBuilder);
 
-                    // or we can use replyMessage() instead to send reply message
-                    // $textMessageBuilder1 = new TextMessageBuilder('ini adalah pesan balasan 1');
-                    // $textMessageBuilder2 = new TextMessageBuilder('ini adalah pesan balasan 2');
-                    // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+//                     // or we can use replyMessage() instead to send reply message
+//                     // $textMessageBuilder1 = new TextMessageBuilder('ini adalah pesan balasan 1');
+//                     // $textMessageBuilder2 = new TextMessageBuilder('ini adalah pesan balasan 2');
+//                     // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 
-                    // try to rplay using sticker
-                    // $packageid = 1;
-                    // $stickerid = 13;
-                    // $stickerMessageBuilder = new StickerMessageBuilder($packageid, $stickerid);
-                    // $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
+//                     // try to rplay using sticker
+//                     // $packageid = 1;
+//                     // $stickerid = 13;
+//                     // $stickerMessageBuilder = new StickerMessageBuilder($packageid, $stickerid);
+//                     // $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
                     
-                    // try to reply multiple message (2 Message and 1 sticker)
-                    // $textMessageBuilder1 = new TextMessageBuilder('ini adalah pesan balasan 1');
-                    // $textMessageBuilder2 = new TextMessageBuilder('ini adalah pesan balasan 2');
-                    // $stickerMessageBuilder = new StickerMessageBuilder(1,106);
+//                     // try to reply multiple message (2 Message and 1 sticker)
+//                     // $textMessageBuilder1 = new TextMessageBuilder('ini adalah pesan balasan 1');
+//                     // $textMessageBuilder2 = new TextMessageBuilder('ini adalah pesan balasan 2');
+//                     // $stickerMessageBuilder = new StickerMessageBuilder(1,106);
 
-                    // $multiMessageBuilder = new MultiMessageBuilder();
-                    // $multiMessageBuilder -> add($textMessageBuilder1);
-                    // $multiMessageBuilder -> add($textMessageBuilder2);
-                    // $multiMessageBuilder -> add($stickerMessageBuilder);
+//                     // $multiMessageBuilder = new MultiMessageBuilder();
+//                     // $multiMessageBuilder -> add($textMessageBuilder1);
+//                     // $multiMessageBuilder -> add($textMessageBuilder2);
+//                     // $multiMessageBuilder -> add($stickerMessageBuilder);
 
-                    // terjadi kesalahan sebelumnya harusnya tanda -> , tp malah =
+//                     // terjadi kesalahan sebelumnya harusnya tanda -> , tp malah =
                     
-                    $stickerMessageBuilder = new StickerMessageBuilder(1,106);
+//                     $stickerMessageBuilder = new StickerMessageBuilder(1,106);
 
-                    $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
+//                     $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
                     
-                    return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+//                     return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     
 
-                }
-            }
-        }
-    } 
-}
+//                 }
+//             }
+//         }
+//     } 
+// }
  
 });
 
