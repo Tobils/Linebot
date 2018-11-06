@@ -82,12 +82,8 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     }
                     
                 } else { // single chat
-                    $userId     = $event['source']['userId'];
-                    $getprofile = $bot->getProfile($userId);
-                    $profile    = $getprofile->getJSONDecodedBody();
-                    $greetings  = new TextMessageBuilder("Hallo, " .$profile ['displayName']);
-
-                    $result = $bot->replyText($event['replyToken'], $greetings);
+                    $textMessageBuilder = new TextMessageBuilder("Hallo");
+                    $result = $bot->replyText($event['replyToken'], $textMessageBuilder);
                     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     
                  }
