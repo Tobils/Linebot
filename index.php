@@ -27,33 +27,57 @@ $app = new Slim\App($configs);
 // buat route untuk url homepage
 $app->get('/', function($req, $res)
 {
-  echo "Hello Sang Pejuang !, Gan Batte !!!!";
+  echo "Welcome at Slim Framework";
 });
-
-// kode untuk membalas pesan
-$app->post('/webhook', function(Request $requst, Response $response) use ($bot, $httpClient){
-$data = json_decode($body, true);
-if(is_array($data['events'])){
-    foreach ($data['events'] as $event)
+ 
+// buat route untuk webhook
+$app->post('/webhook', function ($request, $response) use ($bot, $pass_signature)
+{
+    // get request body and line signature header
+    $body        = file_get_contents('php://input');
+    $signature = isset($_SERVER['HTTP_X_LINE_SIGNATURE']) ? $_SERVER['HTTP_X_LINE_SIGNATURE'] : '';
+ 
+    // log body and signature
+    file_put_contents('php://stderr', 'Body: '.$body);
+ 
+    if($pass_signature === false)
     {
-        if ($event['type'] == 'message')
-        {
-            if($event['message']['type'] == 'text')
-            {
-                // send same message as reply to user
-                $result = $bot->replyText($event['replyToken'], $event['message']['text']);
- 
-                // or we can use replyMessage() instead to send reply message
-                // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
-                // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
- 
-                return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-            }
+        // is LINE_SIGNATURE exists in request header?
+        if(empty($signature)){
+            return $response->withStatus(400, 'Signature not set');
         }
-    } 
-}
-});
+ 
+        // is this request comes from LINE?
+        if(! SignatureValidator::validateSignature($body, $channel_secret, $signature)){
+            return $response->withStatus(400, 'Invalid signature');
+        }
+    }
+    // kode aplikasi nanti disini
 
+    $data = json_decode($body, true);
+    if(is_array($data['events'])){
+        foreach ($data['events'] as $event)
+        {
+            if ($event['type'] == 'message')
+            {
+                if($event['message']['type'] == 'text')
+                {
+                    // send same message as reply to user
+                    $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+    
+                    // or we can use replyMessage() instead to send reply message
+                    // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
+                    // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+    
+                    return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                }
+            }
+        } 
+    }
+ 
+});
+ 
+$app->run();
 file_put_contents('php://stderr', $output);
 $app->run();
 
