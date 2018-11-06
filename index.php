@@ -164,12 +164,6 @@ $app->get('/content/{messageId}', function($req, $res) use ($bot)
  
     return $res->withHeader('Content-Type', $result->getHeader('Content-Type'));
 });
-
-file_put_contents('php://stderr', $output);
-$app->run();
-
-
-
 $app->get('/profile', function($req, $res) use ($bot)
 {
     // get user profile
@@ -182,6 +176,12 @@ $app->get('/profile', function($req, $res) use ($bot)
    
     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
+file_put_contents('php://stderr', $output);
+$app->run();
+
+
+
+
 
 // $app->get('/pushmessage', function($req, $res) use ($bot)
 // {
