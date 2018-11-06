@@ -31,62 +31,86 @@ $app->get('/', function($req, $res)
 });
 
 // kode untuk membalas pesan
-$app->post('/webhook', function(Request $requst, Response $response) use ($bot, $httpClient){
-    $data = json_decode($body, true);
-    if(is_array($data['events'])){
-        foreach($data['events'] as $event){
-            if($event['events'] == 'message'){
-                if($event['source']['type'] == 'group' or $event['source']['type'] == 'room'){ // cek apakah chat berasal daro group ataukah bukan
-                    if($event['message']['type'] == 'text'){ // mengecek apakah pesan berupa text ataukah bukan
-                        if($event['source']['userId']){
-                            $userId     = $event['source']['userId'];
-                            $getprofile = $bot->getProfile($userId);
-                            $greetings  = new TextMessageBuilder("Hallo, ". $profile['displayName']);
 
-                            $result = $bot->replyMessage($event['replyToken'], $greetings);
-                            return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                        }else{
-                            $result = $bot->replyText($event['replyToken'], $event['message']['text']);
-                            return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                        }
-
-                    }elseif // apabila pesan berupa gambar, video, audio  atau document, maka link untuk file dikembalikan
-                    (
-                        $event['message']['type'] == 'video' or
-                        $event['message']['type'] == 'image' or
-                        $event['message']['type'] == 'file' or
-                        $event['message']['type'] == 'audio'
-                    ){
-                        $basePath       = $request->getUri()->getBaseUrl();
-                        $contentURL     = $basePath."/content/".$event['message']['id'];
-                        $contentType    = $ucfirst ($event['message']['type']);
-                        $result         = $bot->replyText($event['replyToken'], $contentType. "yang Anda kirim bisa diakses dari link: \n". $contentURL);
-                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                    }
-                }
-                else{ // apabila chat bukan berasal dari group melainkan dari single user
-                    if($event['message']['type'] == 'text'){ // mengecek apakah pesan berupa text ataukah bukan
-                        $textMessageBuilder = new TextMessageBuilder('ini adalah pesan balasan untuk chat yang anda kirimkan');
-                        $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
-                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());  
-
-                    }elseif // apabila pesan berupa gambar, video atau document, maka link untuk file dikembalikan
-                    (
-                        $event['message']['type'] == 'video' or
-                        $event['message']['type'] == 'image' or
-                        $event['message']['type'] == 'file' or
-                        $event['message']['type'] == 'audio'
-                    ){
-                        $stickerMessageBuilder = new StickerMessageBuilder(1,106);
-                        $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
-                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());                        
-                    }
-
-                }
+$data = json_decode($body, true);
+if(is_array($data['events'])){
+    foreach ($data['events'] as $event)
+    {
+        if ($event['type'] == 'message')
+        {
+            if($event['message']['type'] == 'text')
+            {
+                // send same message as reply to user
+                $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+ 
+                // or we can use replyMessage() instead to send reply message
+                // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
+                // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+ 
+                return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
             }
         }
-    }
-});
+    } 
+}
+
+
+
+// $app->post('/webhook', function(Request $requst, Response $response) use ($bot, $httpClient){
+//     $data = json_decode($body, true);
+//     if(is_array($data['events'])){
+//         foreach($data['events'] as $event){
+//             if($event['events'] == 'message'){
+//                 if($event['source']['type'] == 'group' or $event['source']['type'] == 'room'){ // cek apakah chat berasal daro group ataukah bukan
+//                     if($event['message']['type'] == 'text'){ // mengecek apakah pesan berupa text ataukah bukan
+//                         if($event['source']['userId']){
+//                             $userId     = $event['source']['userId'];
+//                             $getprofile = $bot->getProfile($userId);
+//                             $greetings  = new TextMessageBuilder("Hallo, ". $profile['displayName']);
+
+//                             $result = $bot->replyMessage($event['replyToken'], $greetings);
+//                             return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+//                         }else{
+//                             $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+//                             return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+//                         }
+
+//                     }elseif // apabila pesan berupa gambar, video, audio  atau document, maka link untuk file dikembalikan
+//                     (
+//                         $event['message']['type'] == 'video' or
+//                         $event['message']['type'] == 'image' or
+//                         $event['message']['type'] == 'file' or
+//                         $event['message']['type'] == 'audio'
+//                     ){
+//                         $basePath       = $request->getUri()->getBaseUrl();
+//                         $contentURL     = $basePath."/content/".$event['message']['id'];
+//                         $contentType    = $ucfirst ($event['message']['type']);
+//                         $result         = $bot->replyText($event['replyToken'], $contentType. "yang Anda kirim bisa diakses dari link: \n". $contentURL);
+//                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+//                     }
+//                 }
+//                 else{ // apabila chat bukan berasal dari group melainkan dari single user
+//                     if($event['message']['type'] == 'text'){ // mengecek apakah pesan berupa text ataukah bukan
+//                         $textMessageBuilder = new TextMessageBuilder('ini adalah pesan balasan untuk chat yang anda kirimkan');
+//                         $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+//                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());  
+
+//                     }elseif // apabila pesan berupa gambar, video atau document, maka link untuk file dikembalikan
+//                     (
+//                         $event['message']['type'] == 'video' or
+//                         $event['message']['type'] == 'image' or
+//                         $event['message']['type'] == 'file' or
+//                         $event['message']['type'] == 'audio'
+//                     ){
+//                         $stickerMessageBuilder = new StickerMessageBuilder(1,106);
+//                         $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
+//                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());                        
+//                     }
+
+//                 }
+//             }
+//         }
+//     }
+// });
 // content API
 $app->get('/content/{messageId}', function($req, $res) use ($bot)
 {
