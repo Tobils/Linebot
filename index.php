@@ -55,6 +55,37 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
  
     // kode aplikasi nanti disini
 
+    // untuk membedakan antara chat d group dan pesan dari user single
+    $data = json_decode($body, true);
+    if(is_array($data['event'])){
+        foreach($data['event'] as $event)
+        {
+            if ($event['type'] == 'message')
+            {
+                if(
+                    $event['source']['type'] == 'group' or
+                    $event['source']['type'] == 'room'
+                ){
+                    // kode program untuk membalas chat dalam group
+                    $stickerMessageBuilder = new StickerMessageBuilder(1,106);
+                    $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
+                    
+                } else {
+                    // kode program untuk membalas chat yang bukan dari group
+                    
+                }
+
+            }
+        }
+    }
+
+
+
+
+
+
+
+'''
     $data = json_decode($body, true);
     if(is_array($data['events']))
     {
@@ -119,7 +150,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
     }
 });
 
-
+'''
 // content API
 $app->get('/content/{messageId}', function($req, $res) use ($bot)
 {
@@ -139,14 +170,18 @@ $app->run();
 
 
 
-// $app->get('/profile', function($req, $res) use ($bot)
-// {
-//     // get user profile
-//     $userId = 'Ub24ed1de83ce73879ebeb84b20c5153e'; // userID jaler
-//     $result = $bot->getProfile($userId);
+$app->get('/profile', function($req, $res) use ($bot)
+{
+    // get user profile
+    $userId = 'Ub24ed1de83ce73879ebeb84b20c5153e'; // userID jaler
+    $result = $bot->getProfile($userId);
+
+    $route  = $req->getAttribute('route');
+    $userId = $route->getArgument('userId');
+    $result = $bot->getProfile ($userId);
    
-//     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-// });
+    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+});
 
 // $app->get('/pushmessage', function($req, $res) use ($bot)
 // {
