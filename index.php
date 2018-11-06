@@ -30,66 +30,69 @@ $app->get('/', function($req, $res)
   echo "Hello Sang Pejuang !, Gan Batte !!!!";
 });
 
-$app->post('/webhook', function (Request $request, Response $response) use ($bot, $httpClient) {
+// kode untuk membalas pesan
+$app->posst('/webhook', function(Request $requst, Response $response) use ($bot, $httpClient){
     $data = json_decode($body, true);
-    if (is_array($data['events'])) {
-        foreach ($data['events'] as $event) {
-            if ($event['type'] == 'message') {
-                if($event['message']['type'] == 'text'){
-                    // message from group / room
-                    if ($event['source']['type'] == 'group' or
-                        $event['source']['type'] == 'room'
-                    ) { //group atau room char]t 
-                    if($event['source']['userId']){
-                        $userId     = $event['source']['userId'];
-                        $getprofile = $bot->getProfile($userId);
-                        $profile    = $getprofile->getJSONDecodedBody();
-                        $greetings  = new TextMessageBuilder("Hallo, " .$profile ['displayName']);
-                        
-                        $stickerMessageBuilder = new StickerMessageBuilder(1,106);
-                        $multiMessageBuilder   = new MultiMessageBuilder();
-                        $multiMessageBuilder->add($greetings);
-                        $multiMessageBuilder->add($stickerMessageBuilder); 
-                        $result     = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
-                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                    }  
-                 }
-                }
-                //message from user 
-                 } 
-                else {
-                    if ($event['message']['type'] == 'text') {
-                        if (strtolower($event['message']['text']) == 'user id') {
- 
-                            $result = $bot->replyText($event['replyToken'], $event['source']['userId']);
- 
-                        } elseif (strtolower($event['message']['text']) == 'flex message') {
- 
-                            $flexTemplate = file_get_contents("flex_message.json"); // template flex message
-                            $result = $httpClient->post(LINEBot::DEFAULT_ENDPOINT_BASE . '/v2/bot/message/reply', [
-                                'replyToken' => $event['replyToken'],
-                                'messages'   => [
-                                    [
-                                        'type'     => 'flex',
-                                        'altText'  => 'Test Flex Message',
-                                        'contents' => json_decode($flexTemplate)
-                                    ]
-                                ],
-                            ]);
- 
-                        } else {
-                            // send same message as reply to user
+    if(is_array($data['events'])){
+        foreach($data['events'] as $event){
+            if($event['events'] == 'message'){
+                if($event['source']['type'] == 'group' or $event['source']['type'] == 'room'){ // cek apakah chat berasal daro group ataukah bukan
+                    if($event['message']['type'] == 'text'){ // mengecek apakah pesan berupa text ataukah bukan
+                        if($event['source']['userId']){
+                            $userId     = $event['source']['userId'];
+                            $getprofile = $bot->getProfile($userId);
+                            $greetings  = new TextMessageBuilder("Hallo, ". $profile['displayName']);
+
+                            $result = $bot->replyMessage($event['replyToken'], $greetings);
+                            return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                        }else{
                             $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                            return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                         }
- 
-                        return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+
+                    }elseif // apabila pesan berupa gambar, video, audio  atau document, maka link untuk file dikembalikan
+                    (
+                        $event['message']['type'] == 'video' or
+                        $event['message']['type'] == 'image' or
+                        $event['message']['type'] == 'file' or
+                        $event['message']['type'] == 'audio'
+                    ){
+                        $basePath       = $request->getUri()->getBaseUrl();
+                        $contentURL     = $basePath."/content/".$event['message']['id'];
+                        $contentType    = $ucfirst ($event['message']['type']);
+                        $result         = $bot->replyText($event['replyToken'], $contentType. "yang Anda kirim bisa diakses dari lnik: \n". $contentURL);
+                        rreturn $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
+                }
+                else{ // apabila chat bukan berasal dari group melainkan dari single user
+                    if($event['message']['type'] == 'text'){ // mengecek apakah pesan berupa text ataukah bukan
+
+                    }elseif // apabila pesan berupa gambar, video atau document, maka link untuk file dikembalikan
+                    (
+                        $event['message']['type'] == 'video' or
+                        $event['message']['type'] == 'image' or
+                        $event['message']['type'] == 'file' or
+                        $event['message']['type'] == 'audio'
+                    ){
+                        
+                    }
+
                 }
             }
         }
     }
- 
-    // return $response->withStatus(400, 'No event sent!');
+    return $response->withStatus(400, 'No event sent!');
+});
+$app->get('/content/{messageId}', function($req, $res) use ($bot)
+{
+    // get message content
+    $route      = $res->getAttribute('route');
+    $messageId  = $route->getArgument['messageId'];
+    $result     = $bot->getMessageContent($messageId);
+
+    // set response
+    $res->write($result->getRawBody());
+    return $res->withHeader('Content-Type', $result->getHader('Content-Type'));
 });
 file_put_contents('php://stderr', $output);
 $app->run();
