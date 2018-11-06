@@ -40,7 +40,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
     // log body and signature
     file_put_contents('php://stderr', 'Body: '.$body);
  
-    if($pass_signature === true)
+    if($pass_signature === false)
     {
         // is LINE_SIGNATURE exists in request header?
         if(empty($signature)){
