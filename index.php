@@ -82,7 +82,7 @@ if(is_array($data['events'])){
 $app->get('/pushmessage', function($req, $res) use ($bot)
 {
     // send push message to user
-    $userId = 'U0c39fbef2dfcab2b38de2e70586d805b';
+    $userId = 'jalerse';
     $textMessageBuilder = new TextMessageBuilder('Halo, ini pesan push');
     $result = $bot->pushMessage($userId, $textMessageBuilder);
    
