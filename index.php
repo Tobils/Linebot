@@ -64,21 +64,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
             {
                 if($event['message']['type'] == 'text')
                 {
-                    // untuk model Content API
-                    if(
-                        $event['message']['type'] == 'image' or
-                        $event['message']['type'] == 'video' or
-                        $event['message']['type'] == 'audio' or
-                        $event['message']['type'] == 'file'
-                    ){
-                        $basePath    = $request->getUri()->getBaseUrl();
-                        $contentURL  = $basePath."/content/".$event['message']['id'];
-                        $contentType = ucfirst($event['message']['type']);
-                        $result = $bot->replyText($event['replyToken'], $contentType. "yang Anda kirim bisa diakses dari link:\n " . $contentURL);
-                    
-                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                    }
-                    else {
                         // send same message as reply to user
                         // $result = $bot->replyText($event['replyToken'], $event['message']['text']);
                         // $result = $bot->replyText($replyToken, 'ini pesan balasan');
@@ -114,30 +99,26 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         
                         return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                         
-
+                    // untuk model Content API
+                    if(
+                        $event['message']['type'] == 'image' or
+                        $event['message']['type'] == 'video' or
+                        $event['message']['type'] == 'audio' or
+                        $event['message']['type'] == 'file'
+                    ){
+                        $basePath    = $request->getUri()->getBaseUrl();
+                        $contentURL  = $basePath."/content/".$event['message']['id'];
+                        $contentType = ucfirst($event['message']['type']);
+                        $result = $bot->replyText($event['replyToken'], $contentType. "yang Anda kirim bisa diakses dari link:\n " . $contentURL);
+                    
+                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
+                    
                 }
             }
         } 
     }
 });
-
-// send push message to user
-// $app->get('/pushmessage', function($req, $res) use ($bot)
-// {
-    
-//     $userId = 'U0c39fbef2dfcab2b38de2e70586d805b'; // user id nya jaler
-//     $textMessageBuilder = new TextMessageBuilder('Halo ade, ini pesan push');
-//     $stickerMessageBuilder = new StickerMessageBuilder(1,106);
-
-//     $multiMessageBuilder = new MultiMessageBuilder();
-//     $multiMessageBuilder -> add($textMessageBuilder);
-//     $multiMessageBuilder -> add($stickerMessageBuilder);
-
-//     $result = $bot->pushMessage($userId, $multiMessageBuilder);
-   
-//     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-// });
 
 
 // content API
@@ -177,5 +158,25 @@ $app->run();
    
 //     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 // });
+
+
+// send push message to user
+// $app->get('/pushmessage', function($req, $res) use ($bot)
+// {
+    
+//     $userId = 'U0c39fbef2dfcab2b38de2e70586d805b'; // user id nya jaler
+//     $textMessageBuilder = new TextMessageBuilder('Halo ade, ini pesan push');
+//     $stickerMessageBuilder = new StickerMessageBuilder(1,106);
+
+//     $multiMessageBuilder = new MultiMessageBuilder();
+//     $multiMessageBuilder -> add($textMessageBuilder);
+//     $multiMessageBuilder -> add($stickerMessageBuilder);
+
+//     $result = $bot->pushMessage($userId, $multiMessageBuilder);
+   
+//     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+// });
+
+
 
 // diletakan sebelum code $app->run();
