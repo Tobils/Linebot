@@ -70,15 +70,29 @@ if(is_array($data['events'])){
                 // $result = $bot->replyMessage($replyToken, $textMessageBuilder);
 
                 // or we can use replyMessage() instead to send reply message
-                // $textMessageBuilder = new TextMessageBuilder('ini adalah pesan balasan');
+                // $textMessageBuilder1 = new TextMessageBuilder('ini adalah pesan balasan 1');
+                // $textMessageBuilder2 = new TextMessageBuilder('ini adalah pesan balasan 2');
                 // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 
                 // try to rplay using sticker
+                // $packageid = 1;
+                // $stickerid = 13;
+                // $stickerMessageBuilder = new StickerMessageBuilder($packageid, $stickerid);
+                // $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
+                
+                // try to reply multiple message (2 Message and 1 sticker)
+                $textMessageBuilder1 = new TextMessageBuilder('ini adalah pesan balasan 1');
+                $textMessageBuilder2 = new TextMessageBuilder('ini adalah pesan balasan 2');
                 $packageid = 1;
-                $stickerid = 13;
-                $stickerMessageBuilder = new StickerMessageBuilder($packageid, $stickerid);
-                $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
- 
+                $stickerid = 2;
+                $stickerMessageBuilder = new StickerMessageBuilder($packageid,$stickerid);
+                $multiMessageBuilder = new MultiMessageBuilder();
+                $multiMessageBuilder = add ($textMessageBuilder1);
+                $multiMessageBuilder = add ($textMessageBuilder2);
+                $multiMessageBuilder = add ($stickerMessageBuilder);
+
+                $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
+                
                 return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                 file_put_contents('php://stderr', $output);
             }
