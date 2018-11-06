@@ -74,6 +74,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         $greetings  = new TextMessageBuilder("Hallo, " .$profile ['displayName']);
                         
                         $stickerMessageBuilder = new StickerMessageBuilder(1,106);
+                        $multiMessageBuilder   = new MultiMessageBuilder();
                         $multiMessageBuilder->add($greetings);
                         $multiMessageBuilder->add($stickerMessageBuilder); 
                         $result     = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
