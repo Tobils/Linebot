@@ -87,9 +87,9 @@ if(is_array($data['events'])){
                 $stickerid = 2;
                 $stickerMessageBuilder = new StickerMessageBuilder($packageid,$stickerid);
                 $multiMessageBuilder = new MultiMessageBuilder();
-                $multiMessageBuilder = add ($textMessageBuilder1);
-                $multiMessageBuilder = add ($textMessageBuilder2);
-                $multiMessageBuilder = add ($stickerMessageBuilder);
+                $multiMessageBuilder = add($textMessageBuilder1);
+                $multiMessageBuilder = add($textMessageBuilder2);
+                $multiMessageBuilder = add($stickerMessageBuilder);
 
                 $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
                 
