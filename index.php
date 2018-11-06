@@ -82,28 +82,29 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
         }
     }
 
-// content API
-$app->get('/content/{messageId}', function($req, $res) use ($bot)
-{
-    // get message content
-    $route      = $req->getAttribute('route');
-    $messageId = $route->getArgument('messageId');
-    $result = $bot->getMessageContent($messageId);
- 
-    // set response
-    $res->write($result->getRawBody());
- 
-    return $res->withHeader('Content-Type', $result->getHeader('Content-Type'));
-});
-// untuk mendapat profile API
-$app->get('/profile', function($req, $res) use ($bot)
-{
-    // get user profile
-    $route  = $req->getAttribute('route');
-    $userId = $route->getArgument('userId');
-    $result = $bot->getProfile ($userId);
-   
-    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-});
+    // content API
+    $app->get('/content/{messageId}', function($req, $res) use ($bot)
+    {
+        // get message content
+        $route      = $req->getAttribute('route');
+        $messageId = $route->getArgument('messageId');
+        $result = $bot->getMessageContent($messageId);
+    
+        // set response
+        $res->write($result->getRawBody());
+    
+        return $res->withHeader('Content-Type', $result->getHeader('Content-Type'));
+    });
+    // untuk mendapat profile API
+    $app->get('/profile', function($req, $res) use ($bot)
+    {
+        // get user profile
+        $route  = $req->getAttribute('route');
+        $userId = $route->getArgument('userId');
+        $result = $bot->getProfile ($userId);
+    
+        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+    });
+}
 file_put_contents('php://stderr', $output);
 $app->run();
