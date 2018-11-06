@@ -57,8 +57,8 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 
     // untuk membedakan antara chat d group dan pesan dari user single
     $data = json_decode($body, true);
-    if(is_array($data['event'])){
-        foreach($data['event'] as $event)
+    if(is_array($data['events'])){
+        foreach($data['events'] as $event)
         {
             if ($event['type'] == 'message')
             {
