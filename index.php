@@ -31,7 +31,7 @@ $app->get('/', function($req, $res)
 });
 
 // kode untuk membalas pesan
-$app->posst('/webhook', function(Request $requst, Response $response) use ($bot, $httpClient){
+$app->post('/webhook', function(Request $requst, Response $response) use ($bot, $httpClient){
     $data = json_decode($body, true);
     if(is_array($data['events'])){
         foreach($data['events'] as $event){
