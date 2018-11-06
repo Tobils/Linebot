@@ -71,12 +71,12 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
     
                     return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                 }
-                else // untuk pesan berupa audio, image, video dan file
+                elseif // untuk pesan berupa audio, image, video dan file
                 (
-                    $event['source']['type'] == 'audio' or 
-                    $event['source']['type'] == 'video' or
-                    $event['source']['type'] == 'file' or
-                    $event['source']['type'] == 'image'
+                    $event['message']['type'] == 'image' or
+                    $event['message']['type'] == 'video' or
+                    $event['message']['type'] == 'audio' or
+                    $event['message']['type'] == 'file'
                 ){
                     $basePath  = $request->getUri()->getBaseUrl();
                     $contentURL  = $basePath."/content/".$event['message']['id'];
