@@ -102,24 +102,24 @@ if(is_array($data['events'])){
 }
  
 });
-$app->get('/profile', function($req, $res) use ($bot)
-{
-    // get user profile
-    $userId = 'Ub24ed1de83ce73879ebeb84b20c5153e'; // userID jaler
-    $result = $bot->getProfile($userId);
+// $app->get('/profile', function($req, $res) use ($bot)
+// {
+//     // get user profile
+//     $userId = 'Ub24ed1de83ce73879ebeb84b20c5153e'; // userID jaler
+//     $result = $bot->getProfile($userId);
    
-    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-});
+//     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+// });
 
-$app->get('/pushmessage', function($req, $res) use ($bot)
-{
-    // send push message to user
-    $userId = 'Ub24ed1de83ce73879ebeb84b20c5153e'; // user id nya jaler
-    $textMessageBuilder = new TextMessageBuilder('Halo jaler, ini pesan push');
-    $result = $bot->pushMessage($userId, $textMessageBuilder);
+// $app->get('/pushmessage', function($req, $res) use ($bot)
+// {
+//     // send push message to user
+//     $userId = 'Ub24ed1de83ce73879ebeb84b20c5153e'; // user id nya jaler
+//     $textMessageBuilder = new TextMessageBuilder('Halo jaler, ini pesan push');
+//     $result = $bot->pushMessage($userId, $textMessageBuilder);
    
-    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-});
+//     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+// });
 
 $app->get('/pushmessage', function($req, $res) use ($bot)
 {
