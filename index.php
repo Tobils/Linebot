@@ -69,7 +69,7 @@ $app->post('/webhook', function(Request $requst, Response $response) use ($bot, 
                         $textMessageBuilder = new TextMessageBuilder('ini adalah pesan balasan untuk chat yang anda kirimkan');
                         $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());  
-                        
+
                     }elseif // apabila pesan berupa gambar, video atau document, maka link untuk file dikembalikan
                     (
                         $event['message']['type'] == 'video' or
@@ -86,7 +86,6 @@ $app->post('/webhook', function(Request $requst, Response $response) use ($bot, 
             }
         }
     }
-    return $response->withStatus(400, 'No event sent!');
 });
 // content API
 $app->get('/content/{messageId}', function($req, $res) use ($bot)
