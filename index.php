@@ -74,11 +74,10 @@ if(is_array($data['events'])){
                 // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 
                 // try to rplay using sticker
-                $packageid = 13;
-                $stickerid = 1;
+                $packageid = 1;
+                $stickerid = 13;
                 $stickerMessageBuilder = new StickerMessageBuilder($packageid, $stickerid);
-                $result = $bot->replyMessage($replyToken, $stickerMessageBuilder);
-               //  $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
+                $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
  
                 return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                 file_put_contents('php://stderr', $output);
