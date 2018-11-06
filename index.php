@@ -72,6 +72,11 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());                    
                 } else {
                     // kode program untuk membalas chat yang bukan dari group
+                    $textMessageBuilder = new TextMessageBuilder("Hai, thanks");
+                    $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder); 
+                    return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus()); 
+
+
                     
                 }
 
