@@ -81,7 +81,8 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }  
                 } else { // single chat
-                    $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                    $textMessageBuilder = new TextMessageBuilder("Hallo there !");
+                    $result = $bot->replyText($event['replyToken'], $textMessageBuilder);
                     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 
                  }
