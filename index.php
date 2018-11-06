@@ -71,8 +71,17 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
     
                     // return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 
-                    if (strtolower($event['message']['text']) == 'user id') {
-
+                    if($event['source']['userId']){
+ 
+                        $userId     = $event['source']['userId'];
+                        $getprofile = $bot->getProfile($userId);
+                        $profile    = $getprofile->getJSONDecodedBody();
+                        $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
+                     
+                        $result = $bot->replyMessage($event['replyToken'], $greetings);
+                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                     
+                    } elseif (strtolower($event['message']['text']) == 'user id') {
                         $result = $bot->replyText($event['replyToken'], $event['source']['userId']);
 
                     } elseif (strtolower($event['message']['text']) == 'flex message') {
@@ -123,8 +132,8 @@ $app->get('/content/{messageId}', function($req, $res) use ($bot)
 {
     // get message content
     $route      = $req->getAttribute('route');
-    $messageId = $route->getArgument('messageId');
-    $result = $bot->getMessageContent($messageId);
+    $messageId  = $route->getArgument('messageId');
+    $result     = $bot->getMessageContent($messageId);
  
     // set response
     $res->write($result->getRawBody());
