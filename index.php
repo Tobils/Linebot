@@ -81,22 +81,16 @@ if(is_array($data['events'])){
                 // $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
                 
                 // try to reply multiple message (2 Message and 1 sticker)
-                // $textMessageBuilder1 = new TextMessageBuilder('ini adalah pesan balasan 1');
-                // $textMessageBuilder2 = new TextMessageBuilder('ini adalah pesan balasan 2');
-                // $stickerMessageBuilder = new StickerMessageBuilder(1,106);
-                // $multiMessageBuilder = new MultiMessageBuilder();
-                // $multiMessageBuilder = add($textMessageBuilder1);
-                // $multiMessageBuilder = add($textMessageBuilder2);
-                // $multiMessageBuilder = add($stickerMessageBuilder);
+                $textMessageBuilder1 = new TextMessageBuilder('ini adalah pesan balasan 1');
+                $textMessageBuilder2 = new TextMessageBuilder('ini adalah pesan balasan 2');
+                $stickerMessageBuilder = new StickerMessageBuilder(1,106);
 
-                $textMessageBuilder1 = new TextMessageBuilder('ini pesan balasan pertama');
-                $textMessageBuilder2 = new TextMessageBuilder('ini pesan balasan kedua');
-                $stickerMessageBuilder = new StickerMessageBuilder(1, 106);
-                
                 $multiMessageBuilder = new MultiMessageBuilder();
-                $multiMessageBuilder->add($textMessageBuilder1);
-                $multiMessageBuilder->add($textMessageBuilder2);
-                $multiMessageBuilder->add($stickerMessageBuilder);
+                $multiMessageBuilder -> add($textMessageBuilder1);
+                $multiMessageBuilder -> add($textMessageBuilder2);
+                $multiMessageBuilder -> add($stickerMessageBuilder);
+
+                // terjadi kesalahan sebelumnya harusnya tanda -> , tp malah =
 
                 $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
                 
