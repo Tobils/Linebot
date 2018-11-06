@@ -62,7 +62,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
         {
             if ($event['type'] == 'message')
             {
-                if($event['message']['type'] == 'image')
+                if($event['message']['type'] == 'text')
                 {
                     // send same message as reply to user
                     // $result = $bot->replyText($event['replyToken'], $event['message']['text']);
@@ -97,23 +97,25 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder); 
                     return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                         
-                    // untuk model Content API
-                    if(
-                        $event['message']['type'] == 'image' or
-                        $event['message']['type'] == 'video' or
-                        $event['message']['type'] == 'audio' or
-                        $event['message']['type'] == 'file'
-                    ){
-                        // $basePath    = $request->getUri()->getBaseUrl();
-                        // $contentURL  = $basePath."/content/".$event['message']['id'];
-                        // $contentType = ucfirst($event['message']['type']);
-                        // $result = $bot->replyText($event['replyToken'], $contentURL);
-
-                        $textMessageBuilder = new TextMessageBuilder('pesan masuk, tp belum bisa dikasih link');
-                        $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
-                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                    }
                     
+                    
+                    
+                }
+                // untuk model Content API
+                if(
+                    $event['message']['type'] == 'image' or
+                    $event['message']['type'] == 'video' or
+                    $event['message']['type'] == 'audio' or
+                    $event['message']['type'] == 'file'
+                ){
+                    // $basePath    = $request->getUri()->getBaseUrl();
+                    // $contentURL  = $basePath."/content/".$event['message']['id'];
+                    // $contentType = ucfirst($event['message']['type']);
+                    // $result = $bot->replyText($event['replyToken'], $contentURL);
+
+                    $textMessageBuilder = new TextMessageBuilder('pesan masuk, tp belum bisa dikasih link');
+                    $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+                    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                 }
             }
         } 
