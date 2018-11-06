@@ -136,6 +136,9 @@ $app->get('/', function($req, $res)
 // });
 
 $app->post('/webhook', function (Request $request, Response $response) use ($bot, $httpClient) {
+ 
+    ...
+ 
     $data = json_decode($body, true);
     if (is_array($data['events'])) {
         foreach ($data['events'] as $event) {
@@ -144,20 +147,8 @@ $app->post('/webhook', function (Request $request, Response $response) use ($bot
                 if ($event['source']['type'] == 'group' or
                     $event['source']['type'] == 'room'
                 ) {
-                    if($event['source']['userId']){
-                    $userId     = $event['source']['userId'];
-                    $getprofile = $bot->getProfile($userId);
-                    $profile    = $getprofile->getJSONDecodedBody();
-                    $greetings  = new TextMessageBuilder("Hallo, " .$profile ['displayName']);
-                    
-                    $stickerMessageBuilder = new StickerMessageBuilder(1,106);
-                    $multiMessageBuilder   = new MultiMessageBuilder();
-                    $multiMessageBuilder->add($greetings);
-                    $multiMessageBuilder->add($stickerMessageBuilder); 
-                    $result     = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
-                    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                
-                } else { // message from user
+                // message from user
+                } else {
                     if ($event['message']['type'] == 'text') {
                         if (strtolower($event['message']['text']) == 'user id') {
  
@@ -188,7 +179,6 @@ $app->post('/webhook', function (Request $request, Response $response) use ($bot
             }
         }
     }
-}
  
     return $response->withStatus(400, 'No event sent!');
 });
