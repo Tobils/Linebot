@@ -126,7 +126,13 @@ $app->get('/pushmessage', function($req, $res) use ($bot)
     // send push message to user
     $userId = 'U0c39fbef2dfcab2b38de2e70586d805b'; // user id nya jaler
     $textMessageBuilder = new TextMessageBuilder('Halo ade, ini pesan push');
-    $result = $bot->pushMessage($userId, $textMessageBuilder);
+    $stickerMessageBuilder = new StickerMessageBuilder(1,106);
+
+    $multiMessageBuilder = new MultiMessageBuilder();
+    $multiMessageBuilder -> add($textMessageBuilder);
+    $multiMessageBuilder -> add($stickerMessageBuilder);
+
+    $result = $bot->pushMessage($userId, $multiMessageBuilder);
    
     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
