@@ -95,7 +95,7 @@ if(is_array($data['events'])){
                 $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
                 
                 return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                file_put_contents('php://stderr', $output);
+                
             }
         }
     } 
@@ -136,4 +136,5 @@ $app->get('/pushmessage', function($req, $res) use ($bot)
    
     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
+file_put_contents('php://stderr', $output);
 $app->run();
