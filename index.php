@@ -31,7 +31,7 @@ $app->get('/', function($req, $res)
 });
  
 // buat route untuk webhook
-$app->post('/webhook', function ($request, $response) use ($bot, $pass_signature) use ($bot, $httpClient)
+$app->post('/webhook', function ($request, $response) use ($bot, $pass_signature, $httpClient)
 {
     // get request body and line signature header
     $body        = file_get_contents('php://input');
@@ -70,7 +70,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
     
                     // return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                    
+
                     if (strtolower($event['message']['text']) == 'user id') {
 
                         $result = $bot->replyText($event['replyToken'], $event['source']['userId']);
