@@ -79,13 +79,11 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         $multiMessageBuilder->add($stickerMessageBuilder); 
                         $result     = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                    }
-                    
+                    }  
                 } else { // single chat
-                    $textMessageBuilder = new TextMessageBuilder("Hallo");
-                    $result = $bot->replyText($event['replyToken'], $textMessageBuilder);
+                    $result = $bot->replyText($event['replyToken'], $event['message']['text']);
                     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                    
+
                  }
             }
         }
