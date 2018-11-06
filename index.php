@@ -31,7 +31,7 @@ $app->get('/', function($req, $res)
 });
  
 // buat route untuk webhook
-$app->post('/webhook', function ($request, $response) use ($bot, $pass_signature)
+$app->post('/webhook', function (Request $request,Response $response) use ($bot, $httpClient)
 {
     // get request body and line signature header
     $body      = file_get_contents('php://input');
@@ -81,10 +81,30 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }  
                 } else { // single chat
-                    $textMessageBuilder = new TextMessageBuilder('Hai there !');
-                    $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
-                    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-
+                    // $textMessageBuilder = new TextMessageBuilder('Hai there !');
+                    // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+                    // return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                    if($event['message']['type'] == 'text'){
+                        if (strtolower($event['message']['text']) == 'user id'){
+                            $result = $bot->replyText($event['replyToken'], $event['source']['userId']);
+                        }elseif (strtolower($event['message']['text']) == 'flex message'){
+                            $flexTemplate = file_get_contents("flex_message.json"); // template flex message
+                            $result = $httpClient->post(LINEBot::DEFAULT_ENDPOINT_BASE . '/v2/bot/message/reply',
+                            ['replyToken' => $event['replyToken'],
+                            'message'     => [
+                                [
+                                    'type'      => 'flex',
+                                    'altText'   => 'Test Flex Message',
+                                    'contents'  => json_decode($flexTemplate)
+                                ]
+                            ]
+                        ]);
+                        }else {
+                            // send message as reply to user
+                            $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                        }
+                        return $response -> withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                    }
                  }
             }
         }
