@@ -35,26 +35,28 @@ $app->post('/webhook', function (Request $request, Response $response) use ($bot
     if (is_array($data['events'])) {
         foreach ($data['events'] as $event) {
             if ($event['type'] == 'message') {
-                // message from group / room
-                if ($event['source']['type'] == 'group' or
-                    $event['source']['type'] == 'room'
-                ) { //group atau room char]t 
-                if($event['source']['userId']){
-
-                    $userId     = $event['source']['userId'];
-                    $getprofile = $bot->getProfile($userId);
-                    $profile    = $getprofile->getJSONDecodedBody();
-                    $greetings  = new TextMessageBuilder("Hallo, " .$profile ['displayName']);
-                    
-                    $stickerMessageBuilder = new StickerMessageBuilder(1,106);
-                    $multiMessageBuilder   = new MultiMessageBuilder();
-                    $multiMessageBuilder->add($greetings);
-                    $multiMessageBuilder->add($stickerMessageBuilder); 
-                    $result     = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
-                    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                }  
+                if($event['message']['type'] == 'text'){
+                    // message from group / room
+                    if ($event['source']['type'] == 'group' or
+                        $event['source']['type'] == 'room'
+                    ) { //group atau room char]t 
+                    if($event['source']['userId']){
+                        $userId     = $event['source']['userId'];
+                        $getprofile = $bot->getProfile($userId);
+                        $profile    = $getprofile->getJSONDecodedBody();
+                        $greetings  = new TextMessageBuilder("Hallo, " .$profile ['displayName']);
+                        
+                        $stickerMessageBuilder = new StickerMessageBuilder(1,106);
+                        $multiMessageBuilder   = new MultiMessageBuilder();
+                        $multiMessageBuilder->add($greetings);
+                        $multiMessageBuilder->add($stickerMessageBuilder); 
+                        $result     = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
+                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                    }  
                 //message from user
-                } 
+                 }
+
+                 } 
                 // else {
                 //     if ($event['message']['type'] == 'text') {
                 //         if (strtolower($event['message']['text']) == 'user id') {
@@ -89,7 +91,6 @@ $app->post('/webhook', function (Request $request, Response $response) use ($bot
  
     return $response->withStatus(400, 'No event sent!');
 });
-
 file_put_contents('php://stderr', $output);
 $app->run();
 
