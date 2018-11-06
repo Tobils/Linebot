@@ -64,40 +64,38 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
             {
                 if($event['message']['type'] == 'text')
                 {
-                        // send same message as reply to user
-                        // $result = $bot->replyText($event['replyToken'], $event['message']['text']);
-                        // $result = $bot->replyText($replyToken, 'ini pesan balasan');
-                        // $textMessageBuilder = new TextMessageBuilder('ini pesan balasan');
-                        // $result = $bot->replyMessage($replyToken, $textMessageBuilder);
+                    // send same message as reply to user
+                    // $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                    // $result = $bot->replyText($replyToken, 'ini pesan balasan');
+                    // $textMessageBuilder = new TextMessageBuilder('ini pesan balasan');
+                    // $result = $bot->replyMessage($replyToken, $textMessageBuilder);
 
-                        // or we can use replyMessage() instead to send reply message
-                        // $textMessageBuilder1 = new TextMessageBuilder('ini adalah pesan balasan 1');
-                        // $textMessageBuilder2 = new TextMessageBuilder('ini adalah pesan balasan 2');
-                        // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+                    // or we can use replyMessage() instead to send reply message
+                    // $textMessageBuilder1 = new TextMessageBuilder('ini adalah pesan balasan 1');
+                    // $textMessageBuilder2 = new TextMessageBuilder('ini adalah pesan balasan 2');
+                    // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
 
-                        // try to rplay using sticker
-                        // $packageid = 1;
-                        // $stickerid = 13;
-                        // $stickerMessageBuilder = new StickerMessageBuilder($packageid, $stickerid);
-                        // $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
-                        
-                        // try to reply multiple message (2 Message and 1 sticker)
-                        // $textMessageBuilder1 = new TextMessageBuilder('ini adalah pesan balasan 1');
-                        // $textMessageBuilder2 = new TextMessageBuilder('ini adalah pesan balasan 2');
-                        // $stickerMessageBuilder = new StickerMessageBuilder(1,106);
+                    // try to rplay using sticker
+                    // $packageid = 1;
+                    // $stickerid = 13;
+                    // $stickerMessageBuilder = new StickerMessageBuilder($packageid, $stickerid);
+                    // $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
+                    
+                    // try to reply multiple message (2 Message and 1 sticker)
+                    // $textMessageBuilder1 = new TextMessageBuilder('ini adalah pesan balasan 1');
+                    // $textMessageBuilder2 = new TextMessageBuilder('ini adalah pesan balasan 2');
+                    // $stickerMessageBuilder = new StickerMessageBuilder(1,106);
 
-                        // $multiMessageBuilder = new MultiMessageBuilder();
-                        // $multiMessageBuilder -> add($textMessageBuilder1);
-                        // $multiMessageBuilder -> add($textMessageBuilder2);
-                        // $multiMessageBuilder -> add($stickerMessageBuilder);
+                    // $multiMessageBuilder = new MultiMessageBuilder();
+                    // $multiMessageBuilder -> add($textMessageBuilder1);
+                    // $multiMessageBuilder -> add($textMessageBuilder2);
+                    // $multiMessageBuilder -> add($stickerMessageBuilder);
 
-                        // terjadi kesalahan sebelumnya harusnya tanda -> , tp malah =
-                        
-                        $stickerMessageBuilder = new StickerMessageBuilder(1,106);
-
-                        $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
-                        
-                        return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                    // terjadi kesalahan sebelumnya harusnya tanda -> , tp malah =
+                    
+                    $stickerMessageBuilder = new StickerMessageBuilder(1,106);
+                    $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder); 
+                    return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                         
                     // untuk model Content API
                     if(
@@ -109,7 +107,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         $basePath    = $request->getUri()->getBaseUrl();
                         $contentURL  = $basePath."/content/".$event['message']['id'];
                         $contentType = ucfirst($event['message']['type']);
-                        $result = $bot->replyText($event['replyToken'], $contentType. "yang Anda kirim bisa diakses dari link:\n " . $contentURL);
+                        $result = $bot->replyText($event['replyToken'], $contentURL);
                     
                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
