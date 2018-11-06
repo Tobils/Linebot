@@ -89,7 +89,7 @@ $app->post('/webhook', function (Request $request, Response $response) use ($bot
         }
     }
  
-    return $response->withStatus(400, 'No event sent!');
+    // return $response->withStatus(400, 'No event sent!');
 });
 file_put_contents('php://stderr', $output);
 $app->run();
