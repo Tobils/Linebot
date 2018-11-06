@@ -65,7 +65,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 if(
                     $event['source']['type'] == 'group' or
                     $event['source']['type'] == 'room'
-                ){
+                ){ // group atau room char]t
                     if($event['source']['userId']){
 
                         $userId     = $event['source']['userId'];
@@ -81,13 +81,13 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
                     
-                } else {
+                } else { // single chat
                     $userId     = $event['source']['userId'];
                     $getprofile = $bot->getProfile($userId);
                     $profile    = $getprofile->getJSONDecodedBody();
                     $greetings  = new TextMessageBuilder("Hallo, " .$profile ['displayName']);
 
-                    $result = $bot->replyText($event['replyToken'], $greetings;
+                    $result = $bot->replyText($event['replyToken'], $greetings);
                     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     
                  }
