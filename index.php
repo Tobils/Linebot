@@ -83,9 +83,7 @@ if(is_array($data['events'])){
                 // try to reply multiple message (2 Message and 1 sticker)
                 $textMessageBuilder1 = new TextMessageBuilder('ini adalah pesan balasan 1');
                 $textMessageBuilder2 = new TextMessageBuilder('ini adalah pesan balasan 2');
-                $packageid = 1;
-                $stickerid = 2;
-                $stickerMessageBuilder = new StickerMessageBuilder($packageid,$stickerid);
+                $stickerMessageBuilder = new StickerMessageBuilder(1,106);
                 $multiMessageBuilder = new MultiMessageBuilder();
                 $multiMessageBuilder = add($textMessageBuilder1);
                 $multiMessageBuilder = add($textMessageBuilder2);
