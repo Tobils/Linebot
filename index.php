@@ -111,10 +111,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     $basePath    = $request->getUri()->getBaseUrl();
                     $contentURL  = $basePath."/content/".$event['message']['id'];
                     $contentType = ucfirst($event['message']['type']);
-                    // $result = $bot->replyText($event['replyToken'], $contentURL);
-
-                    $textMessageBuilder = new TextMessageBuilder('pesan masuk, tp belum bisa dikasih link');
-                    $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder , $contentURL);
+                    $result = $bot->replyText($event['replyToken'], $contentType. "yang Anda kirim bisa diakses di link :\n" . $contentURL);
                     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                 }
             }
