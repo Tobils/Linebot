@@ -65,8 +65,9 @@ if(is_array($data['events'])){
             {
                 // send same message as reply to user
                 // $result = $bot->replyText($event['replyToken'], $event['message']['text']);
-                $result = $bot->replyText($replyToken, 'ini pesan balasan');
- 
+                // $result = $bot->replyText($replyToken, 'ini pesan balasan');
+                $textMessageBuilder = new TextMessageBuilder('ini pesan balasan');
+                $result = $bot->replyMessage($replyToken, $textMessageBuilder);
                 // or we can use replyMessage() instead to send reply message
                 // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
                 // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
