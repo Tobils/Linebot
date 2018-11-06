@@ -145,8 +145,7 @@ $app->get('/content/{messageId}', function($req, $res) use ($bot)
 {
     // get message content
     $route      = $req->getAttribute('route');
-    // $messageId = $route->getArgument('messageId');
-    $messageId = '8822679282413';
+    $messageId = $route->getArgument('messageId');
     $result = $bot->getMessageContent($messageId);
  
     // set response
