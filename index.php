@@ -72,21 +72,21 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         $getprofile = $bot->getProfile($userId);
                         $profile    = $getprofile->getJSONDecodedBody();
                         $greetings  = new TextMessageBuilder("Hallo, " .$profile ['displayName']);
-                        $result     = $bot->replyMessage($event['replyToken'], $greetings);
+                        
+                        $stickerMessageBuilder = new StickerMessageBuilder(1,106);
+                        $multiMessageBuilder->add($greetings);
+                        $multiMessageBuilder->add($stickerMessageBuilder); 
+                        $result     = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
-                    // kode program untuk membalas chat dalam group
-                    // $stickerMessageBuilder = new StickerMessageBuilder(1,106);
-                    // $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder); 
-                    // return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());                    
-                
+                    
                 } else {
-                    // kode program untuk membalas chat yang bukan dari group
-                    //     $textMessageBuilder = new TextMessageBuilder("Hai, thanks");
-                    //     $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder); 
-                    //     return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());    
-                    // 
-                    $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                    $userId     = $event['source']['userId'];
+                    $getprofile = $bot->getProfile($userId);
+                    $profile    = $getprofile->getJSONDecodedBody();
+                    $greetings  = new TextMessageBuilder("Hallo, " .$profile ['displayName']);
+
+                    $result = $bot->replyText($event['replyToken'], $greetings;
                     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     
                  }
