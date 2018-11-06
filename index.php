@@ -68,8 +68,9 @@ if(is_array($data['events'])){
                 // $result = $bot->replyText($replyToken, 'ini pesan balasan');
                 // $textMessageBuilder = new TextMessageBuilder('ini pesan balasan');
                 // $result = $bot->replyMessage($replyToken, $textMessageBuilder);
+
                 // or we can use replyMessage() instead to send reply message
-                $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
+                $textMessageBuilder = new TextMessageBuilder('ini adalah pesan balasan');
                 $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
  
                 return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
