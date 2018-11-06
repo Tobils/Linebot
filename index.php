@@ -31,7 +31,7 @@ $app->get('/', function($req, $res)
 });
 
 // kode untuk membalas pesan
-
+$app->post('/webhook', function(Request $requst, Response $response) use ($bot, $httpClient){
 $data = json_decode($body, true);
 if(is_array($data['events'])){
     foreach ($data['events'] as $event)
@@ -52,6 +52,10 @@ if(is_array($data['events'])){
         }
     } 
 }
+});
+
+file_put_contents('php://stderr', $output);
+$app->run();
 
 
 
@@ -112,19 +116,19 @@ if(is_array($data['events'])){
 //     }
 // });
 // content API
-$app->get('/content/{messageId}', function($req, $res) use ($bot)
-{
-    // get message content
-    $route      = $res->getAttribute('route');
-    $messageId  = $route->getArgument['messageId'];
-    $result     = $bot->getMessageContent($messageId);
 
-    // set response
-    $res->write($result->getRawBody());
-    return $res->withHeader('Content-Type', $result->getHader('Content-Type'));
-});
-file_put_contents('php://stderr', $output);
-$app->run();
+// $app->get('/content/{messageId}', function($req, $res) use ($bot)
+// {
+//     // get message content
+//     $route      = $res->getAttribute('route');
+//     $messageId  = $route->getArgument['messageId'];
+//     $result     = $bot->getMessageContent($messageId);
+
+//     // set response
+//     $res->write($result->getRawBody());
+//     return $res->withHeader('Content-Type', $result->getHader('Content-Type'));
+// });
+
 
  
 // buat route untuk webhook
