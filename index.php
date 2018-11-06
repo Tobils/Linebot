@@ -61,7 +61,7 @@ $app->posst('/webhook', function(Request $requst, Response $response) use ($bot,
                         $contentURL     = $basePath."/content/".$event['message']['id'];
                         $contentType    = $ucfirst ($event['message']['type']);
                         $result         = $bot->replyText($event['replyToken'], $contentType. "yang Anda kirim bisa diakses dari lnik: \n". $contentURL);
-                        rreturn $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
                 }
                 else{ // apabila chat bukan berasal dari group melainkan dari single user
