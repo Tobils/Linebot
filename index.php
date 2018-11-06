@@ -71,11 +71,10 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         $event['message']['type'] == 'audio' or
                         $event['message']['type'] == 'file'
                     ){
-                        $basePath  = $request->getUri()->getBaseUrl();
+                        $basePath    = $request->getUri()->getBaseUrl();
                         $contentURL  = $basePath."/content/".$event['message']['id'];
                         $contentType = ucfirst($event['message']['type']);
-                        $result = $bot->replyText($event['replyToken'],
-                            $contentType. " yang Anda kirim bisa diakses dari link:\n " . $contentURL);
+                        $result = $bot->replyText($event['replyToken'], $contentType " yang Anda kirim bisa diakses dari link:\n " . $contentURL);
                     
                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
