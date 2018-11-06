@@ -63,6 +63,21 @@ if(is_array($data['events'])){
         {
             if($event['message']['type'] == 'text')
             {
+                // untuk model Content API
+                if(
+                    $event['message']['type'] == 'image' or
+                    $event['message']['type'] == 'video' or
+                    $event['message']['type'] == 'audio' or
+                    $event['message']['type'] == 'file'
+                ){
+                    $basePath  = $request->getUri()->getBaseUrl();
+                    $contentURL  = $basePath."/content/".$event['message']['id'];
+                    $contentType = ucfirst($event['message']['type']);
+                    $result = $bot->replyText($event['replyToken'],
+                        $contentType. " yang Anda kirim bisa diakses dari link:\n " . $contentURL);
+                 
+                    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                }
                 // send same message as reply to user
                 // $result = $bot->replyText($event['replyToken'], $event['message']['text']);
                 // $result = $bot->replyText($replyToken, 'ini pesan balasan');
@@ -81,18 +96,20 @@ if(is_array($data['events'])){
                 // $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
                 
                 // try to reply multiple message (2 Message and 1 sticker)
-                $textMessageBuilder1 = new TextMessageBuilder('ini adalah pesan balasan 1');
-                $textMessageBuilder2 = new TextMessageBuilder('ini adalah pesan balasan 2');
-                $stickerMessageBuilder = new StickerMessageBuilder(1,106);
+                // $textMessageBuilder1 = new TextMessageBuilder('ini adalah pesan balasan 1');
+                // $textMessageBuilder2 = new TextMessageBuilder('ini adalah pesan balasan 2');
+                // $stickerMessageBuilder = new StickerMessageBuilder(1,106);
 
-                $multiMessageBuilder = new MultiMessageBuilder();
-                $multiMessageBuilder -> add($textMessageBuilder1);
-                $multiMessageBuilder -> add($textMessageBuilder2);
-                $multiMessageBuilder -> add($stickerMessageBuilder);
+                // $multiMessageBuilder = new MultiMessageBuilder();
+                // $multiMessageBuilder -> add($textMessageBuilder1);
+                // $multiMessageBuilder -> add($textMessageBuilder2);
+                // $multiMessageBuilder -> add($stickerMessageBuilder);
 
                 // terjadi kesalahan sebelumnya harusnya tanda -> , tp malah =
+                
+                $stickerMessageBuilder = new StickerMessageBuilder(1,106);
 
-                $result = $bot->replyMessage($event['replyToken'], $multiMessageBuilder);
+                $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
                 
                 return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                 
@@ -102,6 +119,42 @@ if(is_array($data['events'])){
 }
  
 });
+
+$app->get('/pushmessage', function($req, $res) use ($bot)
+{
+    // send push message to user
+    $userId = 'U0c39fbef2dfcab2b38de2e70586d805b'; // user id nya jaler
+    $textMessageBuilder = new TextMessageBuilder('Halo ade, ini pesan push');
+    $stickerMessageBuilder = new StickerMessageBuilder(1,106);
+
+    $multiMessageBuilder = new MultiMessageBuilder();
+    $multiMessageBuilder -> add($textMessageBuilder);
+    $multiMessageBuilder -> add($stickerMessageBuilder);
+
+    $result = $bot->pushMessage($userId, $multiMessageBuilder);
+   
+    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+});
+file_put_contents('php://stderr', $output);
+
+// content API
+$app->get('/content/{messageId}', function($req, $res) use ($bot)
+{
+    // get message content
+    $route      = $req->getAttribute('route');
+    $messageId = $route->getArgument('messageId');
+    $result = $bot->getMessageContent($messageId);
+ 
+    // set response
+    $res->write($result->getRawBody());
+ 
+    return $res->withHeader('Content-Type', $result->getHeader('Content-Type'));
+});
+
+$app->run();
+
+
+
 // $app->get('/profile', function($req, $res) use ($bot)
 // {
 //     // get user profile
@@ -121,20 +174,4 @@ if(is_array($data['events'])){
 //     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 // });
 
-$app->get('/pushmessage', function($req, $res) use ($bot)
-{
-    // send push message to user
-    $userId = 'U0c39fbef2dfcab2b38de2e70586d805b'; // user id nya jaler
-    $textMessageBuilder = new TextMessageBuilder('Halo ade, ini pesan push');
-    $stickerMessageBuilder = new StickerMessageBuilder(1,106);
-
-    $multiMessageBuilder = new MultiMessageBuilder();
-    $multiMessageBuilder -> add($textMessageBuilder);
-    $multiMessageBuilder -> add($stickerMessageBuilder);
-
-    $result = $bot->pushMessage($userId, $multiMessageBuilder);
-   
-    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-});
-file_put_contents('php://stderr', $output);
-$app->run();
+// diletakan sebelum code $app->run();
