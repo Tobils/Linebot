@@ -102,12 +102,11 @@ if(is_array($data['events'])){
 }
  
 });
-$app->get('/pushmessage', function($req, $res) use ($bot)
+$app->get('/profile', function($req, $res) use ($bot)
 {
-    // send push message to user
+    // get user profile
     $userId = 'U0c39fbef2dfcab2b38de2e70586d805b';
-    $textMessageBuilder = new TextMessageBuilder('Halo, ini pesan push');
-    $result = $bot->pushMessage($userId, $textMessageBuilder);
+    $result = $bot->getProfile($userId);
    
     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
 });
