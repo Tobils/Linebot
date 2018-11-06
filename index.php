@@ -137,7 +137,7 @@ $app->get('/', function($req, $res)
 
 $app->post('/webhook', function (Request $request, Response $response) use ($bot, $httpClient) {
  
-    ...
+    
  
     $data = json_decode($body, true);
     if (is_array($data['events'])) {
@@ -148,7 +148,7 @@ $app->post('/webhook', function (Request $request, Response $response) use ($bot
                     $event['source']['type'] == 'room'
                 ) {
  
-                    ...
+                
  
                 // message from user
                 } else {
@@ -179,7 +179,7 @@ $app->post('/webhook', function (Request $request, Response $response) use ($bot
                         return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
  
-                    ...
+                    
  
                 }
             }
