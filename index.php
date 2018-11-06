@@ -105,6 +105,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
     
         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
     });
-}
+});
 file_put_contents('php://stderr', $output);
 $app->run();
