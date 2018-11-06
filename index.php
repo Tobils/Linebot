@@ -9,7 +9,7 @@ use \LINE\LINEBot\MessageBuilder\StickerMessageBuilder;
 use \LINE\LINEBot\SignatureValidator as SignatureValidator;
  
 // set false for production
-$pass_signature = false;
+$pass_signature = true;
  
 // set LINE channel_access_token and channel_secret
 $channel_access_token = "Gw1bZ6cwKxln54UvtUmN1ymqp6/sVk8aMLZPGBbIku3Veh13BmOrDw4x8FrGz6Qz9oHV8jd/mwZtsNpv2vY4pNU0HJyCxdO3HgVEYMMqWXaGH5goOcUM7jv2ldz7L61OsWu4vV/gZxI/qg+ZeUkwfgdB04t89/1O/w1cDnyilFU=";
@@ -20,7 +20,7 @@ $httpClient = new CurlHTTPClient($channel_access_token);
 $bot = new LINEBot($httpClient, ['channelSecret' => $channel_secret]);
  
 $configs =  [
-    'settings' => ['displayErrorDetails' => true],
+    'settings' => ['displayErrorDetails' => false],
 ];
 $app = new Slim\App($configs);
  
@@ -34,7 +34,7 @@ $app->get('/', function($req, $res)
 $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature)
 {
     // get request body and line signature header
-    $body        = file_get_contents('php://input');
+    $body      = file_get_contents('php://input');
     $signature = isset($_SERVER['HTTP_X_LINE_SIGNATURE']) ? $_SERVER['HTTP_X_LINE_SIGNATURE'] : '';
  
     // log body and signature
