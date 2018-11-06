@@ -76,8 +76,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
     }
  
 });
- 
-$app->run();
+
 file_put_contents('php://stderr', $output);
 $app->run();
 
