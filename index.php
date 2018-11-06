@@ -69,6 +69,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     // kode program untuk membalas chat dalam group
                     $stickerMessageBuilder = new StickerMessageBuilder(1,106);
                     $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
+                    return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     
                 } else {
                     // kode program untuk membalas chat yang bukan dari group
