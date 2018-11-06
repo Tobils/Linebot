@@ -60,13 +60,16 @@ $app->post('/webhook', function(Request $requst, Response $response) use ($bot, 
                         $basePath       = $request->getUri()->getBaseUrl();
                         $contentURL     = $basePath."/content/".$event['message']['id'];
                         $contentType    = $ucfirst ($event['message']['type']);
-                        $result         = $bot->replyText($event['replyToken'], $contentType. "yang Anda kirim bisa diakses dari lnik: \n". $contentURL);
+                        $result         = $bot->replyText($event['replyToken'], $contentType. "yang Anda kirim bisa diakses dari link: \n". $contentURL);
                         return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                     }
                 }
                 else{ // apabila chat bukan berasal dari group melainkan dari single user
                     if($event['message']['type'] == 'text'){ // mengecek apakah pesan berupa text ataukah bukan
-
+                        $textMessageBuilder = new TextMessageBuilder('ini adalah pesan balasan untuk chat yang anda kirimkan');
+                        $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());  
+                        
                     }elseif // apabila pesan berupa gambar, video atau document, maka link untuk file dikembalikan
                     (
                         $event['message']['type'] == 'video' or
@@ -74,7 +77,9 @@ $app->post('/webhook', function(Request $requst, Response $response) use ($bot, 
                         $event['message']['type'] == 'file' or
                         $event['message']['type'] == 'audio'
                     ){
-                        
+                        $stickerMessageBuilder = new StickerMessageBuilder(1,106);
+                        $result = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
+                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());                        
                     }
 
                 }
@@ -83,6 +88,7 @@ $app->post('/webhook', function(Request $requst, Response $response) use ($bot, 
     }
     return $response->withStatus(400, 'No event sent!');
 });
+// content API
 $app->get('/content/{messageId}', function($req, $res) use ($bot)
 {
     // get message content
