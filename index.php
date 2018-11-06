@@ -108,13 +108,13 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     $event['message']['type'] == 'audio' or
                     $event['message']['type'] == 'file'
                 ){
-                    // $basePath    = $request->getUri()->getBaseUrl();
-                    // $contentURL  = $basePath."/content/".$event['message']['id'];
-                    // $contentType = ucfirst($event['message']['type']);
+                    $basePath    = $request->getUri()->getBaseUrl();
+                    $contentURL  = $basePath."/content/".$event['message']['id'];
+                    $contentType = ucfirst($event['message']['type']);
                     // $result = $bot->replyText($event['replyToken'], $contentURL);
 
                     $textMessageBuilder = new TextMessageBuilder('pesan masuk, tp belum bisa dikasih link');
-                    $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
+                    $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder , $contentURL);
                     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                 }
             }
