@@ -91,7 +91,8 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         }
 
                         else {// send same message as reply to user
-                            $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                            $stickerMessageBuilder = new StickerMessageBuilder(1,3);
+                            $result = $bot->replyText($event['replyToken'], $stickerMessageBuilder);
                             return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus()); 
                         }                     
                     } 
