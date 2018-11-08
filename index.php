@@ -62,50 +62,36 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
             {
                 if($event['message']['type'] == 'text')
                 {
-                    // send same message as reply to user
-                    // $result = $bot->replyText($event['replyToken'], $event['message']['text']);
-    
-                    // or we can use replyMessage() instead to send reply message
-                    // $textMessageBuilder = new TextMessageBuilder($event['message']['text']);
-                    // $result = $bot->replyMessage($event['replyToken'], $textMessageBuilder);
-    
-                    // return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-
                     if($event['source']['userId']){
- 
-                        $userId     = $event['source']['userId'];
-                        $getprofile = $bot->getProfile($userId);
-                        $profile    = $getprofile->getJSONDecodedBody();
-                        $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
-                     
-                        $result = $bot->replyMessage($event['replyToken'], $greetings);
-                        return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                     
-                    } elseif (strtolower($event['message']['text']) == 'user id') {
-                        $result = $bot->replyText($event['replyToken'], $event['source']['userId']);
-
-                    } elseif (strtolower($event['message']['text']) == 'flex message') {
-
-                        $flexTemplate = file_get_contents("flex_message.json"); // template flex message
-                        $result = $httpClient->post(LINEBot::DEFAULT_ENDPOINT_BASE . '/v2/bot/message/reply', [
-                            'replyToken' => $event['replyToken'],
-                            'messages'   => [
-                                [
-                                    'type'     => 'flex',
-                                    'altText'  => 'Test Flex Message',
-                                    'contents' => json_decode($flexTemplate)
-                                ]
-                            ],
-                        ]);
-
-                    } else {
-                        // send same message as reply to user
+                        if(strtolower($event['message']['test'] == 'flex message')){
+                            $flexTemplate = file_get_contents("flex_message.json"); // template flex message
+                            $result = $httpClient->post(LINEBot::DEFAULT_ENDPOINT_BASE . '/v2/bot/message/reply', [
+                                'replyToken' => $event['replyToken'],
+                                'messages'   => [
+                                    [
+                                        'type'     => 'flex',
+                                        'altText'  => 'Test Flex Message',
+                                        'contents' => json_decode($flexTemplate)
+                                    ]
+                                ],
+                            ]);
+                        }
+                        else{ // apabila dikenali userId nya, maka pesan dibalas dengan menyebut nama pengguna
+                            $userId     = $event['source']['userId'];
+                            $getprofile = $bot->getProfile($userId);
+                            $profile    = $getprofile->getJSONDecodedBody();
+                            $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
+                         
+                            $result = $bot->replyMessage($event['replyToken'], $greetings);
+                            return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                        }
+                    } 
+                    else {// send same message as reply to user
                         $result = $bot->replyText($event['replyToken'], $event['message']['text']);
-                    }
-
-                    return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                    
-                }
+                        return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus()); 
+                    }  
+                } 
+                
 
                 elseif // untuk pesan berupa audio, image, video dan file
                 (
