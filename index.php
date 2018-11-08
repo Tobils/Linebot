@@ -108,7 +108,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                     $stickerID      = $bot->getProfile($stickerID);
                     $pakgID         = $event['message']['packageId'];
                     $pakgID         = $bot->getProfile($pakgID);
-                    $stickerMessageBuilder = new StickerMessageBuilder(1, 3);
+                    $stickerMessageBuilder = new StickerMessageBuilder($pakgID, $stickerID);
                     $result         = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
                     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                 }
