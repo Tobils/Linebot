@@ -63,6 +63,7 @@
         "type": "button",
         "style": "primary",
         "action": {
+          "link" : "wwww.google.com",
           "type": "postback",
           "label": "Daftar",
           "displayText": "Daftar",
