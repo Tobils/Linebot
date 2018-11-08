@@ -64,7 +64,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 {
                     if($event['source']['userId']){
                         if(strtolower($event['message']['test'] == 'flex message')){
-                            $flexTemplate = file_get_contents("flex_message.json"); // template flex message
+                            $flexTemplate = file_get_contents("flex_message.json"); // load template flex message
                             $result = $httpClient->post(LINEBot::DEFAULT_ENDPOINT_BASE . '/v2/bot/message/reply', [
                                 'replyToken' => $event['replyToken'],
                                 'messages'   => [
@@ -75,6 +75,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                     ]
                                 ],
                             ]);
+                            return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                         }
                         else{ // apabila dikenali userId nya, maka pesan dibalas dengan menyebut nama pengguna
                             $userId     = $event['source']['userId'];
