@@ -79,7 +79,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             echo "Send flex message";
                         }
                         else{ // apabila dikenali userId nya, maka pesan dibalas dengan menyebut nama pengguna
-                            if(strtolower($event['message'['text'] == 'adabot')){
+                            if(strtolower($event['message']['text'] == 'adabot')){
                                 $userId     = $event['source']['userId'];
                                 $getprofile = $bot->getProfile($userId);
                                 $profile    = $getprofile->getJSONDecodedBody();
