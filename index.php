@@ -91,8 +91,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         }
 
                         else {// send same message as reply to user
-                            $stickerMessageBuilder = new StickerMessageBuilder(1,3);
-                            $result = $bot->replyText($event['replyToken'], $stickerMessageBuilder);
+                            $result = $bot->replyText($event['replyToken'], $event['message']['text']);
                             return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus()); 
                         }                     
                     } 
@@ -107,8 +106,8 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 elseif ($event['message']['type'] == 'sticker'){ // apabila pesan yang dikirimkan berupa sticker, maka kirimkan sticker yang sama
                     $stickerID      = $event['message']['stickerId'];
                     $pakgID         = $event['message']['packageId'];
-                    $stickerMessageBuilder = new StickerMessageBuilder(1, 3);
-                    $result         = $bot->replyText($event['replyToken'], $stickerMessageBuilder);
+                    $stickerMessageBuilder = new StickerMessageBuilder($packageId, $stickerId);
+                    $result         = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
                     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                 }
                 
