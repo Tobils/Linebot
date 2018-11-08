@@ -63,7 +63,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 if($event['message']['type'] == 'text')
                 {
                     if($event['source']['userId']){
-                        if(strtolower($event['message']['test'] == 'flex message')){
+                        if(strtolower($event['message']['text'] == 'flex message')){
                             $flexTemplate = file_get_contents("flex_message.json"); // load template flex message
                             $result = $httpClient->post(LINEBot::DEFAULT_ENDPOINT_BASE . '/v2/bot/message/reply', [
                                 'replyToken' => $event['replyToken'],
@@ -78,20 +78,24 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                             echo "Send flex message";
                         }
-                        else{ // apabila dikenali userId nya, maka pesan dibalas dengan menyebut nama pengguna
-                            if(strtolower($event['message']['text'] == 'adabot')){
-                                $userId     = $event['source']['userId'];
-                                $getprofile = $bot->getProfile($userId);
-                                $profile    = $getprofile->getJSONDecodedBody();
-                                $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
-                             
-                                $result = $bot->replyMessage($event['replyToken'], $greetings);
-                                return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                                echo "Send message who call adabot";
-                            }
+                        
+                        elseif(strtolower($event['message']['text'] == 'adabot')){ // apabila dikenali userId nya, maka pesan dibalas dengan menyebut nama pengguna dan memanggil "adabot"
+                            $userId     = $event['source']['userId'];
+                            $getprofile = $bot->getProfile($userId);
+                            $profile    = $getprofile->getJSONDecodedBody();
+                            $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
+                            
+                            $result = $bot->replyMessage($event['replyToken'], $greetings);
+                            return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                            echo "Send message who call adabot";
                         }
+                        else {// send same message as reply to user
+                            $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                            return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus()); 
+                        }  
+                        
                     } 
-                    else {// send same message as reply to user
+                    else {// send same message as reply to user apabila userId blm diketahui
                         $result = $bot->replyText($event['replyToken'], $event['message']['text']);
                         return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus()); 
                     }  
