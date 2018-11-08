@@ -105,7 +105,9 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 
                 elseif ($event['message']['type'] == 'sticker'){ // apabila pesan yang dikirimkan berupa sticker, maka kirimkan sticker yang sama
                     $stickerID      = $event['message']['stickerId'];
+                    $stickerID      = $bot->getProfile($stickerID);
                     $pakgID         = $event['message']['packageId'];
+                    $pakgID         = $bot->getProfile($pakgID);
                     $stickerMessageBuilder = new StickerMessageBuilder(1, 3);
                     $result         = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
                     return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
