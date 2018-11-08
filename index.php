@@ -89,17 +89,27 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                             return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
                             echo "Send message who call adabot";
                         }
+
                         else {// send same message as reply to user
                             $result = $bot->replyText($event['replyToken'], $event['message']['text']);
                             return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus()); 
-                        }  
-                        
+                        }                     
                     } 
+
                     else {// send same message as reply to user apabila userId blm diketahui
                         $result = $bot->replyText($event['replyToken'], $event['message']['text']);
                         return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus()); 
                     }  
                 } 
+                
+
+                elseif ($event['message']['type'] == 'sticker'){
+                    $stickerID      = $event['source']['stickerId'];
+                    $pakgID         = $event['source']['packageId'];
+                    $stickerMessageBuilder = new StickerMessageBuilder($pakgID, $stickerID);
+                    $result         = $bot->replyMessage($event['replyToken'], $stickerMessageBuilder);
+                    return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                }
                 
 
                 elseif // untuk pesan berupa audio, image, video dan file
