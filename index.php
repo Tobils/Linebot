@@ -76,15 +76,19 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 ],
                             ]);
                             return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                            echo "Send flex message";
                         }
                         else{ // apabila dikenali userId nya, maka pesan dibalas dengan menyebut nama pengguna
-                            $userId     = $event['source']['userId'];
-                            $getprofile = $bot->getProfile($userId);
-                            $profile    = $getprofile->getJSONDecodedBody();
-                            $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
-                         
-                            $result = $bot->replyMessage($event['replyToken'], $greetings);
-                            return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                            if(strtolower($event['message'['text'] == 'adabot')){
+                                $userId     = $event['source']['userId'];
+                                $getprofile = $bot->getProfile($userId);
+                                $profile    = $getprofile->getJSONDecodedBody();
+                                $greetings  = new TextMessageBuilder("Halo, ".$profile['displayName']);
+                             
+                                $result = $bot->replyMessage($event['replyToken'], $greetings);
+                                return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                                echo "Send message who call adabot";
+                            }
                         }
                     } 
                     else {// send same message as reply to user
