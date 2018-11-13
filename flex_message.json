@@ -82,10 +82,9 @@
             "type": "button",
             "style": "primary",
             "action": {
-              "type": "postback",
+              "type": "message",
               "label": "UN",
-              "displayText" : "Anda Menekan Tombol UN",
-              "data" : "Anda Menekan Tombol UN"
+              "text" : "Anda Menekan Tombol UN"
             }
           },
           {
@@ -93,10 +92,9 @@
             "style": "primary",
             "color": "#999999",
             "action": {
-              "type": "postback",
+              "type": "message",
               "label": "SBMPTN",
-              "displayText" : "Anda Menekan Tombol SBMPTN",
-              "data" : "Anda Menekan Tombol SBMPTN"
+              "text" : "Anda Menekan Tombol SBMPTN"
             }
           }
         ]
