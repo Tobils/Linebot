@@ -82,9 +82,9 @@
             "type": "button",
             "style": "primary",
             "action": {
-              "type": "uri",
+              "type": "postback",
               "label": "UN",
-              "uri": "https://linecorp.com"
+              "displayText" : "Anda Menekan Tombol UN"
             }
           },
           {
@@ -92,9 +92,9 @@
             "style": "primary",
             "color": "#999999",
             "action": {
-              "type": "uri",
+              "type": "postback",
               "label": "SBMPTN",
-              "uri": "https://linecorp.com"
+              "displayText" : "Anda Menekan Tombol SBMPTN"
             }
           }
         ]
