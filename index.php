@@ -35,7 +35,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
 {
     // get request body and line signature header
     $body        = file_get_contents('php://input');
-    $signature = isset($_SERVER['HTTP_X_LINE_SIGNATURE']) ? $_SERVER['HTTP_X_LINE_SIGNATURE'] : '';
+    $signature   = isset($_SERVER['HTTP_X_LINE_SIGNATURE']) ? $_SERVER['HTTP_X_LINE_SIGNATURE'] : '';
  
     // log body and signature
     file_put_contents('php://stderr', 'Body: '.$body);
