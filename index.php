@@ -63,7 +63,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 if($event['message']['type'] == 'text')
                 {
                     if($event['source']['userId']){
-                        if(strtolower($event['message']['text'] == 'flex message')){
+                        if(strtolower($event['message']['text'] == 'semangat')){
                             $flexTemplate = file_get_contents("flex_message.json"); // load template flex message
                             $result = $httpClient->post(LINEBot::DEFAULT_ENDPOINT_BASE . '/v2/bot/message/reply', [
                                 'replyToken' => $event['replyToken'],
@@ -76,6 +76,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 ],
                             ]);
                             return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
+                       
                         }
                         
                         elseif(strtolower($event['message']['text'] == 'adabot')){ // apabila dikenali userId nya, maka pesan dibalas dengan menyebut nama pengguna dan memanggil "adabot"
@@ -90,8 +91,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         }
 
                         else {// send same message as reply to user
-                            $stickerMessageBuilder = new StickerMessageBuilder(1,3);
-                            $result = $bot->replyText($event['replyToken'], $stickerMessageBuilder);
+                            $result = $bot->replyText($event['replyToken'], $event['message']['text']);
                             return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus()); 
                         }                     
                     } 
