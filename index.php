@@ -76,7 +76,6 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 ],
                             ]);
                             return $res->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus());
-                            echo "Send flex message";
                         }
                         
                         elseif(strtolower($event['message']['text'] == 'adabot')){ // apabila dikenali userId nya, maka pesan dibalas dengan menyebut nama pengguna dan memanggil "adabot"
@@ -91,7 +90,8 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                         }
 
                         else {// send same message as reply to user
-                            $result = $bot->replyText($event['replyToken'], $event['message']['text']);
+                            $stickerMessageBuilder = new StickerMessageBuilder(1,3);
+                            $result = $bot->replyText($event['replyToken'], $stickerMessageBuilder);
                             return $response->withJson($result->getJSONDecodedBody(), $result->getHTTPStatus()); 
                         }                     
                     } 
