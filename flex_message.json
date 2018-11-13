@@ -83,7 +83,8 @@
             "style": "primary",
             "action": {
             "type": "message",
-            "label": "UN"
+            "label": "UN",
+            "text":"UN"
             }
           },
           {
@@ -92,7 +93,8 @@
             "color": "#999999",
             "action": {
             "type": "message",
-            "label": "SBMPTN"
+            "label": "SBMPTN",
+            "text":"SBMPTN"
             }
           }
         ]
