@@ -1,171 +1,378 @@
 {
-  "type": "flex",
-  "altText": "Q1. Which is the API to create chatbot?",
-  "contents": {
-    "type": "bubble",
-    "body": {
-      "type": "box",
-      "layout": "vertical",
-      "spacing": "md",
-      "contents": [
-        {
-          "type": "box",
-          "layout": "vertical",
-          "contents": [
-            {
-              "type": "text",
-              "text": "Q1",
-              "align": "center",
-              "size": "xxl",
-              "weight": "bold"
-            },
-            {
-              "type": "text",
-              "text": "Which is the API to create chatbot?",
-              "wrap": true,
-              "weight": "bold",
-              "margin": "lg"
+  "type": "carousel",
+  "contents": [
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://res.cloudinary.com/widya-ai/image/upload/v1542017932/botjo/no_1.png"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Biologi",
+            "wrap": true,
+            "weight": "bold",
+            "size": "xl"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "UN",
+                "wrap": true,
+                "weight": "bold",
+                "size": "xl",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": ", SBMPTN",
+                "wrap": true,
+                "weight": "bold",
+                "size": "sm",
+                "flex": 0
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "kata-kata bijak Biologi",
+                "wrap": true,
+                "size": "xxs",
+                "color": "#94b1b9",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "-anonim",
+                "wrap": true,
+                "size": "xxs",
+                "flex": 0
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "style": "primary",
+            "action": {
+              "type": "uri",
+              "label": "Mulai Latihan",
+              "uri": "https://linecorp.com"
             }
-          ]
-        },
-        {
-          "type": "separator"
-        },
-        {
-          "type": "box",
-          "layout": "vertical",
-          "margin": "lg",
-          "contents": [
-            {
-              "type": "box",
-              "layout": "baseline",
-              "contents": [
-                {
-                  "type": "text",
-                  "text": "1.",
-                  "flex": 1,
-                  "size": "lg",
-                  "weight": "bold",
-                  "color": "#666666"
-                },
-                {
-                  "type": "text",
-                  "text": "Login API",
-                  "wrap": true,
-                  "flex": 9
-                }
-              ]
-            },
-            {
-              "type": "box",
-              "layout": "baseline",
-              "contents": [
-                {
-                  "type": "text",
-                  "text": "2.",
-                  "flex": 1,
-                  "size": "lg",
-                  "weight": "bold",
-                  "color": "#666666"
-                },
-                {
-                  "type": "text",
-                  "text": "Messaging API",
-                  "wrap": true,
-                  "flex": 9
-                }
-              ]
-            },
-            {
-              "type": "box",
-              "layout": "baseline",
-              "contents": [
-                {
-                  "type": "text",
-                  "text": "3.",
-                  "flex": 1,
-                  "size": "lg",
-                  "weight": "bold",
-                  "color": "#666666"
-                },
-                {
-                  "type": "text",
-                  "text": "Graph API",
-                  "wrap": true,
-                  "flex": 9
-                }
-              ]
-            },
-            {
-              "type": "box",
-              "layout": "baseline",
-              "contents": [
-                {
-                  "type": "text",
-                  "text": "4.",
-                  "flex": 1,
-                  "size": "lg",
-                  "weight": "bold",
-                  "color": "#666666"
-                },
-                {
-                  "type": "text",
-                  "text": "Cartoon API",
-                  "wrap": true,
-                  "flex": 9
-                }
-              ]
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "uri",
+              "label": "Mulai SBMPTN",
+              "uri": "https://linecorp.com"
             }
-          ]
-        }
-      ]
+          }
+        ]
+      }
     },
-    "footer": {
-      "type": "box",
-      "layout": "horizontal",
-      "spacing": "sm",
-      "contents": [
-        {
-          "type": "button",
-          "style": "primary",
-          "height": "sm",
-          "action": {
-            "type": "message",
-            "label": "1",
-            "text": "Login API"
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_6_carousel.png"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Fisika",
+            "wrap": true,
+            "weight": "bold",
+            "size": "xl"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "flex": 1,
+            "contents": [
+              {
+                "type": "text",
+                "text": "UN",
+                "wrap": true,
+                "weight": "bold",
+                "size": "xl",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": ", SBMPTN",
+                "wrap": true,
+                "weight": "bold",
+                "size": "sm",
+                "flex": 0
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "kata-kata bijak Biologi",
+                "wrap": true,
+                "size": "xxs",
+                "color": "#94b1b9",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "-anonim",
+                "wrap": true,
+                "size": "xxs",
+                "flex": 0
+              }
+            ]
           }
-        },
-        {
-          "type": "button",
-          "style": "primary",
-          "height": "sm",
-          "action": {
-            "type": "message",
-            "label": "2",
-            "text": "Messaging API"
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "flex": 2,
+            "style": "primary",
+            "color": "#aaaaaa",
+            "action": {
+              "type": "uri",
+              "label": "Mulai UN",
+              "uri": "https://linecorp.com"
+            }
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "uri",
+              "label": "Mulai SBMPTN",
+              "uri": "https://linecorp.com"
+            }
           }
-        },
-        {
-          "type": "button",
-          "style": "primary",
-          "height": "sm",
-          "action": {
-            "type": "message",
-            "label": "3",
-            "text": "Graph API"
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_6_carousel.png"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Matematika",
+            "wrap": true,
+            "weight": "bold",
+            "size": "xl"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "flex": 1,
+            "contents": [
+              {
+                "type": "text",
+                "text": "UN",
+                "wrap": true,
+                "weight": "bold",
+                "size": "xl",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": ", SBMPTN",
+                "wrap": true,
+                "weight": "bold",
+                "size": "sm",
+                "flex": 0
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "kata-kata bijak Biologi",
+                "wrap": true,
+                "size": "xxs",
+                "color": "#94b1b9",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "-anonim",
+                "wrap": true,
+                "size": "xxs",
+                "flex": 0
+              }
+            ]
           }
-        },
-        {
-          "type": "button",
-          "style": "primary",
-          "height": "sm",
-          "action": {
-            "type": "message",
-            "label": "4",
-            "text": "Cartoon API"
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "flex": 2,
+            "style": "primary",
+            "color": "#aaaaaa",
+            "action": {
+              "type": "uri",
+              "label": "Mulai UN",
+              "uri": "https://linecorp.com"
+            }
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "uri",
+              "label": "Mulai SBMPTN",
+              "uri": "https://linecorp.com"
+            }
           }
-        }
-      ]
+        ]
+      }
+    },
+    {
+      "type": "bubble",
+      "hero": {
+        "type": "image",
+        "size": "full",
+        "aspectRatio": "20:13",
+        "aspectMode": "cover",
+        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_6_carousel.png"
+      },
+      "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "text",
+            "text": "Kimia",
+            "wrap": true,
+            "weight": "bold",
+            "size": "xl"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "flex": 1,
+            "contents": [
+              {
+                "type": "text",
+                "text": "UN",
+                "wrap": true,
+                "weight": "bold",
+                "size": "xl",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": ", SBMPTN",
+                "wrap": true,
+                "weight": "bold",
+                "size": "sm",
+                "flex": 0
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "kata-kata bijak Biologi",
+                "wrap": true,
+                "size": "xxs",
+                "color": "#94b1b9",
+                "flex": 0
+              },
+              {
+                "type": "text",
+                "text": "-anonim",
+                "wrap": true,
+                "size": "xxs",
+                "flex": 0
+              }
+            ]
+          }
+        ]
+      },
+      "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "button",
+            "flex": 2,
+            "style": "primary",
+            "color": "#aaaaaa",
+            "action": {
+              "type": "uri",
+              "label": "Add to Cart",
+              "uri": "https://linecorp.com"
+            }
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "uri",
+              "label": "Add to wish list",
+              "uri": "https://linecorp.com"
+            }
+          }
+        ]
+      }
     }
-  }
+  ]
 }
