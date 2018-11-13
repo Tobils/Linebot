@@ -84,7 +84,8 @@
             "action": {
               "type": "postback",
               "label": "UN",
-              "displayText" : "Anda Menekan Tombol UN"
+              "displayText" : "Anda Menekan Tombol UN",
+              "data" : "Anda Menekan Tombol UN"
             }
           },
           {
@@ -94,7 +95,8 @@
             "action": {
               "type": "postback",
               "label": "SBMPTN",
-              "displayText" : "Anda Menekan Tombol SBMPTN"
+              "displayText" : "Anda Menekan Tombol SBMPTN",
+              "data" : "Anda Menekan Tombol SBMPTN"
             }
           }
         ]
