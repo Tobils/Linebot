@@ -82,9 +82,8 @@
             "type": "button",
             "style": "primary",
             "action": {
-              "type": "message",
-              "label": "UN",
-              "text" : "Anda Menekan Tombol UN"
+            "type": "message",
+            "label": "UN"
             }
           },
           {
@@ -92,9 +91,8 @@
             "style": "primary",
             "color": "#999999",
             "action": {
-              "type": "message",
-              "label": "SBMPTN",
-              "text" : "Anda Menekan Tombol SBMPTN"
+            "type": "message",
+            "label": "SBMPTN"
             }
           }
         ]
