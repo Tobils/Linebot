@@ -63,7 +63,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                 if($event['message']['type'] == 'text')
                 {
                     if($event['source']['userId']){
-                        if (strtolower($event['message']['text']) == 'semangat'){
+                        if (strtolower($event['message']['text']) == 'chalenge'){
                             $flexTemplate = file_get_contents("flex_message.json"); // load template flex message
                             $result = $httpClient->post(LINEBot::DEFAULT_ENDPOINT_BASE . '/v2/bot/message/reply', [
                                 'replyToken' => $event['replyToken'],
