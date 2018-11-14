@@ -50,7 +50,7 @@
             "contents": [
               {
                 "type": "text",
-                "text": "kata-kata bijak Biologi",
+                "text": "”Tidak beriman seseorang di antara kalian hingga ia mencintai Saudaranya sebagaimana mencintai dirinya sendiri.”",
                 "wrap": true,
                 "size": "xxs",
                 "color": "#94b1b9",
@@ -58,7 +58,7 @@
               },
               {
                 "type": "text",
-                "text": "-anonim",
+                "text": "(H.R. Bukhari dan Muslim)",
                 "wrap": true,
                 "size": "xxs",
                 "flex": 0
