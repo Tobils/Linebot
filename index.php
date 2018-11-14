@@ -79,7 +79,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                        
                         }
                         
-                        elseif(strtolower($event['message']['text'] == 'adabot')){ // apabila dikenali userId nya, maka pesan dibalas dengan menyebut nama pengguna dan memanggil "adabot"
+                        elseif(strtolower($event['message']['text'] == 'hai')){ // apabila dikenali userId nya, maka pesan dibalas dengan menyebut nama pengguna dan memanggil "adabot"
                             $userId     = $event['source']['userId'];
                             $getprofile = $bot->getProfile($userId);
                             $profile    = $getprofile->getJSONDecodedBody();
