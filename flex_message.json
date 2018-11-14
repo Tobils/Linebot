@@ -84,7 +84,7 @@
             "action": {
               "type": "uri",
               "label": "UN Biologi",
-              "uri": "https://linecorp.com"
+              "uri": "https://adabotline.herokuapp.com"
             }
           },
           {
@@ -92,7 +92,7 @@
             "action": {
               "type": "uri",
               "label": "SBMPTN Biologi",
-              "uri": "https://linecorp.com"
+              "uri": "https://tebakcodephp.herokuapp.com"
             }
           }
         ]
