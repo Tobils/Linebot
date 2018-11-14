@@ -70,7 +70,7 @@ $app->post('/webhook', function ($request, $response) use ($bot, $pass_signature
                                 'messages'   => [
                                     [
                                         'type'     => 'flex',
-                                        'altText'  => 'Test Flex Message',
+                                        'altText'  => 'Semangat menggapai mimpi !',
                                         'contents' => json_decode($flexTemplate)
                                     ]
                                 ],
