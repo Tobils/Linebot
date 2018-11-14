@@ -50,17 +50,23 @@
             "contents": [
               {
                 "type": "text",
+                "text": "(H.R. Bukhari dan Muslim)",
+                "wrap": true,
+                "size": "xxs",
+                "flex": 0
+              }
+            ]
+          }, 
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
                 "text": "”Tidak beriman seseorang di antara kalian hingga ia mencintai Saudaranya sebagaimana mencintai dirinya sendiri.”",
                 "wrap": true,
                 "size": "xxs",
                 "color": "#94b1b9",
-                "flex": 0
-              },
-              {
-                "type": "text",
-                "text": "(H.R. Bukhari dan Muslim)",
-                "wrap": true,
-                "size": "xxs",
                 "flex": 0
               }
             ]
@@ -77,7 +83,7 @@
             "style": "primary",
             "action": {
               "type": "uri",
-              "label": "Mulai Latihan",
+              "label": "UN Biologi",
               "uri": "https://linecorp.com"
             }
           },
@@ -85,7 +91,7 @@
             "type": "button",
             "action": {
               "type": "uri",
-              "label": "Mulai SBMPTN",
+              "label": "SBMPTN Biologi",
               "uri": "https://linecorp.com"
             }
           }
